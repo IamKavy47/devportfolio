@@ -408,7 +408,7 @@
         <img src="/assets/projects/chatoxf.png" class="preview-img" id="img-omnix">
         <img src="/assets/projects/thinkup.png" class="preview-img" id="img-velocita">
         <img src="/assets/projects/macos.png" class="preview-img" id="img-echo">
-        <img src="https://images.unsplash.com/photo-1519681393784-d8e5b5a4570e?q=80&w=500" class="preview-img" id="img-nebula">
+        <img src="/assets/projects/codestorm.png" class="preview-img" id="img-nebula">
         <img src="https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=500" class="preview-img" id="img-vertex">
         <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=500" class="preview-img" id="img-aether">
         <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=500" class="preview-img" id="img-cipher">
@@ -444,12 +444,12 @@
                     <div class="row-title">Thinkup'25</div><div class="row-cats">Ideathon Website</div><div class="row-year">2025</div>
                 </div>
                 <div class="project-row hoverable" data-id="echo" data-img="img-echo">
-                    <div class="row-title">MacOS Clone</div><div class="row-cats">Design System</div><div class="row-year">2025</div>
+                    <div class="row-title">MacOS Clone</div><div class="row-cats">MacOS Web Clone</div><div class="row-year">2025</div>
                 </div>
                 <div class="project-row hoverable" data-id="nebula" data-img="img-nebula">
-                    <div class="row-title">Nebula Stream</div><div class="row-cats">Data Viz / React</div><div class="row-year">2023</div>
+                    <div class="row-title">MU CodeStorm</div><div class="row-cats">Hackathon Website</div><div class="row-year">2025</div>
                 </div>
-                <div class="project-row hoverable" data-id="vertex" data-img="img-vertex">
+                <!-- <div class="project-row hoverable" data-id="vertex" data-img="img-vertex">
                     <div class="row-title">Vertex Logic</div><div class="row-cats">Backend / Python</div><div class="row-year">2022</div>
                 </div>
                 <div class="project-row hoverable" data-id="aether" data-img="img-aether">
@@ -460,7 +460,7 @@
                 </div>
                 <div class="project-row hoverable" data-id="glitch" data-img="img-glitch">
                     <div class="row-title">Glitch Mode</div><div class="row-cats">Experiment</div><div class="row-year">2020</div>
-                </div>
+                </div> -->
             </div>
 
             <!-- CONTACT SECTION (FROM MAIN) -->
@@ -491,62 +491,62 @@
     <script>
         // --- DATA ---
         const projectsData = {
-            "omnix": {
-                title: "OmniXForge",
-                meta: "AI ARCHITECTURE / 2024",
-                desc: "A cutting-edge AI platform designed to streamline model deployment and architectural scalability. Built with a React frontend and Python backend, OmniXForge visualizes complex neural networks in real-time.",
-                img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000",
-                github: "#", live: "#"
+            "chatoxf": {
+                title: "ChatOXF",
+                meta: "Chatting Platform / 2025",
+                desc: "A chat app built with HTML, CSS, JS, and Convex with GSAP animations. Features an AI assistant similar to WhatsApp's Meta AI.",
+                img: "/assets/projects/chatoxf.png",
+                github: "https://github.com/iamkavy47/chatoxf", live: "https://chatoxf.vercel.app/"
             },
-            "velocita": {
-                title: "Velocita.GL",
-                meta: "WEBGL / 2024",
-                desc: "An immersive automotive showcase experience. Utilizing Three.js and WebGL shaders to render photorealistic car models with interactive physics and custom lighting environments.",
-                img: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1000",
-                github: "#", live: "#"
+            "thinkup": {
+                title: "Thinkup'25",
+                meta: "IDEATHON WEBSITE / 2025",
+                desc: "A vibrant pixel-art website for Thinkup'25, a national-level ideathon fostering innovation and creativity in a futuristic, collaborative campus.",
+                img: "/assets/projects/thinkup.png",
+                github: "https://github.com/iamkavy47/ideathon", live: "https://mufests.com"
             },
-            "echo": {
-                title: "Echo UI",
-                meta: "DESIGN SYSTEM / 2023",
+            "macos": {
+                title: "MACOS CLONE",
+                meta: "MACOS WEB CLONE / 2025",
                 desc: "A comprehensive enterprise-grade design system. Focuses on accessibility (a11y), atomic component structure, and seamless dark-mode integration using CSS variables and React Context.",
-                img: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1000",
-                github: "#", live: "#"
+                img: "/assets/projects/macos.png",
+                github: "https://github.com/iamkavy47/portfolio", live: "https://iamkavy47.vercel.app"
             },
             "nebula": {
-                title: "Nebula Stream",
-                meta: "DATA VIZ / 2023",
-                desc: "Real-time data visualization dashboard for high-frequency trading. Handles millions of data points using D3.js and WebSockets for sub-millisecond updates.",
-                img: "https://images.unsplash.com/photo-1519681393784-d8e5b5a4570e?q=80&w=1000",
-                github: "#", live: "#"
+                title: "MU CODESTORM",
+                meta: "HACKATHON WEBSITE / 2025",
+                desc: "The official high-performance portal for Mandsaur University's National Level Hackathon, built with Next.js to handle seamless registrations and event updates.",
+                img: "/assets/projects/codestorm.png",
+                github: "https://github.com/iamkavy47/mucodestorm", live: "https://mucodestorm.vercel.app/"
             },
-            "vertex": {
-                title: "Vertex Logic",
-                meta: "BACKEND / 2022",
-                desc: "Scalable cloud infrastructure solution. Automates server provisioning and load balancing using Python scripts and AWS Lambda functions.",
-                img: "https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=1000",
-                github: "#", live: "#"
-            },
-            "aether": {
-                title: "Aether Labs",
-                meta: "WEB3 / 2022",
-                desc: "Decentralized application (dApp) for trading unique digital assets. Smart contracts written in Solidity on the Ethereum blockchain.",
-                img: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=1000",
-                github: "#", live: "#"
-            },
-            "cipher": {
-                title: "Cipher Punk",
-                meta: "GENERATIVE ART / 2021",
-                desc: "Algorithmic art generator exploring chaos theory and fractal patterns. Users can mint their unique generations as NFTs.",
-                img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000",
-                github: "#", live: "#"
-            },
-            "glitch": {
-                title: "Glitch Mode",
-                meta: "EXPERIMENT / 2020",
-                desc: "Experimental portfolio site utilizing CSS mix-blend-modes and canvas manipulation to create a brutalist, glitch-art aesthetic.",
-                img: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1000",
-                github: "#", live: "#"
-            }
+            // "vertex": {
+            //     title: "Vertex Logic",
+            //     meta: "BACKEND / 2022",
+            //     desc: "Scalable cloud infrastructure solution. Automates server provisioning and load balancing using Python scripts and AWS Lambda functions.",
+            //     img: "https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=1000",
+            //     github: "#", live: "#"
+            // },
+            // "aether": {
+            //     title: "Aether Labs",
+            //     meta: "WEB3 / 2022",
+            //     desc: "Decentralized application (dApp) for trading unique digital assets. Smart contracts written in Solidity on the Ethereum blockchain.",
+            //     img: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=1000",
+            //     github: "#", live: "#"
+            // },
+            // "cipher": {
+            //     title: "Cipher Punk",
+            //     meta: "GENERATIVE ART / 2021",
+            //     desc: "Algorithmic art generator exploring chaos theory and fractal patterns. Users can mint their unique generations as NFTs.",
+            //     img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000",
+            //     github: "#", live: "#"
+            // },
+            // "glitch": {
+            //     title: "Glitch Mode",
+            //     meta: "EXPERIMENT / 2020",
+            //     desc: "Experimental portfolio site utilizing CSS mix-blend-modes and canvas manipulation to create a brutalist, glitch-art aesthetic.",
+            //     img: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1000",
+            //     github: "#", live: "#"
+            // }
         };
 
         // --- INIT ---
