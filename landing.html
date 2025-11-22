@@ -20,9 +20,6 @@
     <script src="https://unpkg.com/split-type"></script>
 
     <style>
-        html {
-              scroll-behavior: smooth;
-        }
         /* --- CSS VARIABLES & THEMING --- */
         :root {
             /* Dark Mode (Default) */
@@ -66,13 +63,13 @@
             width: 100%;
             overflow-x: hidden;
             transition: background-color 0.5s ease, color 0.5s ease;
-            cursor: none;
+            cursor: none; /* Custom cursor */
         }
 
         h1, h2, h3, .display-font { font-family: 'Clash Display', sans-serif; }
         .font-mono { font-family: var(--font-mono); }
 
-        /* --- NAVBAR --- */
+        /* --- NAVBAR & THEME TOGGLE --- */
         .navbar {
             position: fixed; top: 0; left: 0; width: 100%;
             padding: 1.5rem 5%; display: flex; justify-content: space-between;
@@ -368,7 +365,7 @@
 
     <!-- NAVBAR -->
     <nav class="navbar">
-        <div class="font-bold text-xl tracking-tighter hoverable" style="color: var(--text-main)">KAVY®</div>
+        <a href="#hero" class="font-bold text-xl tracking-tighter hoverable nav-link-smooth" style="color: var(--text-main); text-decoration: none;">KAVY®</a>
         <div class="flex items-center">
             <div class="nav-links-container">
                 <a href="#work-section" class="nav-link hoverable">Work</a>
@@ -376,7 +373,13 @@
                 <a href="#arsenal" class="nav-link hoverable">Arsenal</a>
                 <a href="#contact" class="nav-link hoverable">Contact</a>
             </div>
-            <a href="assets/resume.pdf" download="Kavy_Porwal_Resume" class="resume-btn hoverable">Resume</a>
+            
+            <!-- RESUME BUTTON -->
+            <a href="assets/resume.pdf" download="Kavy_Porwal_Resume" class="resume-btn hoverable">
+                Resume
+            </a>
+
+            <!-- THEME SWITCHER -->
             <button class="theme-toggle hoverable" id="themeBtn">
                 <span class="light-text">LIGHT</span> / <span class="dark-text">DARK</span>
             </button>
@@ -399,7 +402,7 @@
         <div id="smooth-content">
 
             <!-- 1. HERO -->
-            <section class="min-h-screen flex flex-col justify-center md:justify-end pb-20 px-4 md:px-10 pt-32 relative overflow-hidden">
+            <section id="hero" class="min-h-screen flex flex-col justify-center md:justify-end pb-20 px-4 md:px-10 pt-32 relative overflow-hidden">
                 <div class="relative z-10">
                     <div class="hero-text-line"><h1 class="hero-title split-heading">Creative</h1></div>
                     <div class="hero-text-line"><h1 class="hero-title outline-text split-heading">Engineer</h1></div>
@@ -408,6 +411,7 @@
                         <h1 class="hero-title text-[var(--accent)] split-heading">& Artist</h1>
                     </div>
                 </div>
+
                 <div class="flex flex-col md:flex-row justify-between mt-16 border-t border-[var(--line-color)] pt-6 hero-meta">
                     <div class="w-full md:w-1/3">
                         <p class="text-lg leading-relaxed text-[var(--text-muted)]">
@@ -416,7 +420,7 @@
                         </p>
                     </div>
                     <div class="flex gap-8 mt-8 md:mt-0 font-mono text-xs tracking-widest">
-                        <div><div style="color: var(--accent)" class="mb-1">LOC</div><div>Mandsaur</div></div>
+                        <div><div style="color: var(--accent)" class="mb-1">LOC</div><div>MANDSAUR</div></div>
                         <div><div style="color: var(--accent)" class="mb-1">STAT</div><div class="animate-pulse">AVAILABLE</div></div>
                     </div>
                 </div>
@@ -426,6 +430,7 @@
             <section id="work-section" class="works-wrapper">
                 <div class="curtain curtain-top"><h2 class="split-work-text">WORKS</h2></div>
                 <div class="curtain curtain-bottom"><h2 class="split-work-text">WORKS</h2></div>
+
                 <div class="gallery-track-wrapper">
                     <div class="gallery-track">
                         
@@ -440,9 +445,11 @@
                                 <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop" class="project-img">
                                 <div class="deck-info">
                                     <h3 class="project-title">OmniXForge</h3>
-                                    <p class="project-desc">Next-generation AI architecture platform designed for scalability.</p>
+                                    <p class="project-desc">Next-generation AI architecture platform designed for scalability and modular deployment. Integrated with Python and React.</p>
                                     <div class="tech-tags">
-                                        <div class="tech-tag">React</div><div class="tech-tag">Python</div><div class="tech-tag">AI</div>
+                                        <div class="tech-tag">React</div>
+                                        <div class="tech-tag">Python</div>
+                                        <div class="tech-tag">AI</div>
                                     </div>
                                     <div class="project-actions">
                                         <a href="#" class="action-btn">GITHUB</a>
@@ -463,9 +470,11 @@
                                 <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1000&auto=format&fit=crop" class="project-img">
                                 <div class="deck-info">
                                     <h3 class="project-title">Velocita</h3>
-                                    <p class="project-desc">Immersive WebGL automotive experience featuring real-time 3D rendering.</p>
+                                    <p class="project-desc">Immersive WebGL automotive experience featuring real-time 3D rendering and physics-based interactions.</p>
                                     <div class="tech-tags">
-                                        <div class="tech-tag">Three.js</div><div class="tech-tag">WebGL</div><div class="tech-tag">GSAP</div>
+                                        <div class="tech-tag">Three.js</div>
+                                        <div class="tech-tag">WebGL</div>
+                                        <div class="tech-tag">GSAP</div>
                                     </div>
                                     <div class="project-actions">
                                         <a href="#" class="action-btn">GITHUB</a>
@@ -486,9 +495,11 @@
                                 <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1000&auto=format&fit=crop" class="project-img">
                                 <div class="deck-info">
                                     <h3 class="project-title">Echo UI</h3>
-                                    <p class="project-desc">Enterprise-grade design system focusing on accessibility and modularity.</p>
+                                    <p class="project-desc">Enterprise-grade design system focusing on accessibility, dark-mode optimization, and component modularity.</p>
                                     <div class="tech-tags">
-                                        <div class="tech-tag">Figma</div><div class="tech-tag">React</div><div class="tech-tag">SCSS</div>
+                                        <div class="tech-tag">Figma</div>
+                                        <div class="tech-tag">React</div>
+                                        <div class="tech-tag">SCSS</div>
                                     </div>
                                     <div class="project-actions">
                                         <a href="#" class="action-btn">GITHUB</a>
@@ -532,11 +543,17 @@
                         <div class="id-logo">KAVY® INDUSTRIES</div>
                         <div class="id-chip"></div>
                     </div>
+                    
                     <div class="id-body">
+                        <!-- Left: Photo & Scan -->
                         <div class="id-photo-zone">
                             <div class="id-scan-line"></div>
-                            <div class="p-2 bg-black/60 text-[var(--accent)] text-xs font-mono text-center">IDENTITY_CONFIRMED</div>
+                            <div class="p-2 bg-black/60 text-[var(--accent)] text-xs font-mono text-center">
+                                IDENTITY_CONFIRMED
+                            </div>
                         </div>
+                        
+                        <!-- Right: Details -->
                         <div class="id-details">
                             <div>
                                 <div class="id-row">
@@ -573,6 +590,7 @@
                 <div class="px-4 md:px-10 mb-8 flex justify-between items-end">
                     <div class="section-label font-mono text-[var(--accent)] text-xs border border-[var(--accent)] px-3 py-1 rounded-full">03 // SYSTEM ARSENAL</div>
                 </div>
+
                 <div class="stream-wrapper">
                     <div class="tech-stream">
                         <div class="tech-pill hoverable">React</div><div class="tech-pill hoverable">Next.js</div>
@@ -618,9 +636,24 @@
     <script>
         // --- CONFIG ---
         gsap.registerPlugin(ScrollTrigger);
+
+        // --- LENIS ---
         const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smooth: true });
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
+
+        // Smooth Scroll for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return; // Ignore empty hash
+                const target = document.querySelector(targetId);
+                if (target) {
+                    lenis.scrollTo(target);
+                }
+            });
+        });
 
         // --- THEME TOGGLE ---
         const themeBtn = document.getElementById('themeBtn');
@@ -636,6 +669,7 @@
         const scrambleEl = document.querySelector('#scramble');
         const preloader = document.querySelector('.preloader');
         const techWords = ["BOOTING", "LOADING SHADERS", "OPTIMIZING", "READY"];
+        
         let progress = 0;
         const updateLoader = () => {
             let increment = Math.floor(Math.random() * 5) + 1;
@@ -656,36 +690,45 @@
 
         // --- ANIMATIONS ---
         function initSiteAnimations() {
-            // Hero
+            // 1. Hero
             const headings = document.querySelectorAll('.split-heading');
             headings.forEach(h => {
                 const text = new SplitType(h, { types: 'chars' });
                 gsap.to(h, { opacity: 1, duration: 0 });
-                gsap.fromTo(text.chars, { y: 100, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.02, duration: 1.2, ease: "power4.out", delay: 0.1 });
+                gsap.fromTo(text.chars, 
+                    { y: 100, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.02, duration: 1.2, ease: "power4.out", delay: 0.1 }
+                );
             });
             gsap.fromTo(".hero-line-deco", { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 1.5, ease: "expo.out", delay: 0.6 });
             gsap.fromTo(".hero-meta", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1, delay: 1, ease: "power2.out" });
 
-            // Works
+            // 2. Works Split
             const trackWrapper = document.querySelector('.gallery-track-wrapper');
             const track = document.querySelector('.gallery-track');
+            
+            // Responsive Scroll Distance
             const getScrollAmount = () => -(track.scrollWidth - window.innerWidth);
             
             const tl = gsap.timeline({
-                scrollTrigger: { trigger: "#work-section", start: "top top", end: "+=400%", pin: true, scrub: 1 }
+                scrollTrigger: {
+                    trigger: "#work-section", start: "top top", end: "+=400%", pin: true, scrub: 1,
+                }
             });
+
             tl.to(".curtain-top", { yPercent: -100, duration: 1, ease: "power2.inOut" }, "open")
               .to(".curtain-bottom", { yPercent: 100, duration: 1, ease: "power2.inOut" }, "open")
               .fromTo(track, { x: 0 }, { x: getScrollAmount, duration: 5, ease: "none" }, "scroll")
               .to(".curtain-top", { yPercent: 0, duration: 1, ease: "power2.inOut" }, "close")
               .to(".curtain-bottom", { yPercent: 0, duration: 1, ease: "power2.inOut" }, "close");
 
-            // About ID Tilt
+            // 3. About ID Card Tilt
             const card = document.getElementById('tiltCard');
             if(card) {
                 document.addEventListener('mousemove', (e) => {
                     const x = (window.innerWidth / 2 - e.clientX) / 30;
                     const y = (window.innerHeight / 2 - e.clientY) / 30;
+                    
+                    // Only tilt if section is visible
                     const rect = card.getBoundingClientRect();
                     if(rect.top < window.innerHeight && rect.bottom > 0) {
                          card.style.transform = `rotateY(${-x}deg) rotateX(${y}deg)`;
@@ -693,9 +736,12 @@
                 });
             }
 
-            // Contact
+            // 4. Contact
              const contactText = new SplitType('.contact-big-text', { types: 'chars' });
-            gsap.from(contactText.chars, { yPercent: 100, opacity: 0, stagger: 0.05, scrollTrigger: { trigger: ".contact-big-text", start: "top 80%" } });
+            gsap.from(contactText.chars, {
+                yPercent: 100, opacity: 0, stagger: 0.05,
+                scrollTrigger: { trigger: ".contact-big-text", start: "top 80%" }
+            });
         }
 
         // --- CURSOR ---
@@ -707,10 +753,16 @@
             gsap.set(cursor, { x: mouseX - 4, y: mouseY - 4 });
             gsap.to(follower, { x: mouseX - 20, y: mouseY - 20, duration: 0.15 });
         });
+
         document.querySelectorAll('.hoverable').forEach(el => {
-            el.addEventListener('mouseenter', () => { gsap.to(follower, { width: 80, height: 80, borderColor: 'var(--accent)', mixBlendMode: 'difference' }); });
-            el.addEventListener('mouseleave', () => { gsap.to(follower, { width: 40, height: 40, borderColor: 'var(--text-muted)', mixBlendMode: 'normal' }); });
+            el.addEventListener('mouseenter', () => {
+                gsap.to(follower, { width: 80, height: 80, borderColor: 'var(--accent)', mixBlendMode: 'difference' });
+            });
+            el.addEventListener('mouseleave', () => {
+                gsap.to(follower, { width: 40, height: 40, borderColor: 'var(--text-muted)', mixBlendMode: 'normal' });
+            });
         });
+
     </script>
 </body>
 </html>
