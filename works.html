@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kavy Porwal | Project Archive</title>
+    
+    <!-- Font: Clash Display & Satoshi -->
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
+    <!-- Font: JetBrains Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- GSAP & Lenis -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="https://unpkg.com/split-type"></script>
+
+    <style>
+        /* --- VARIABLES --- */
+        :root {
+            /* Dark Mode */
+            --bg-color: #050505;
+            --text-main: #EDEDED;
+            --text-muted: #888888;
+            --accent: #DBFF00;
+            --accent-glow: rgba(219, 255, 0, 0.2);
+            --line-color: rgba(255, 255, 255, 0.12);
+            --font-mono: 'JetBrains Mono', monospace;
+            --modal-bg: rgba(10, 10, 10, 0.95);
+            --modal-overlay: rgba(0, 0, 0, 0.9);
+            --window-bg: #0a0a0a;
+        }
+
+        body.light-mode {
+            /* Light Mode */
+            --bg-color: #EBEBEB;
+            --text-main: #111111;
+            --text-muted: #555555;
+            --accent: #D4A000;
+            --accent-glow: rgba(212, 160, 0, 0.15);
+            --line-color: rgba(0, 0, 0, 0.1);
+            --modal-bg: rgba(245, 245, 245, 0.98);
+            --modal-overlay: rgba(255, 255, 255, 0.9);
+            --window-bg: #FFFFFF;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Satoshi', sans-serif;
+            width: 100%;
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+            cursor: none;
+        }
+
+        h1, h2, h3, .display-font { font-family: 'Clash Display', sans-serif; }
+        .font-mono { font-family: var(--font-mono); }
+
+        /* --- NAVBAR (Z-Index 1000) --- */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%;
+            padding: 2rem 5%; display: flex; justify-content: space-between;
+            align-items: center; z-index: 1000; mix-blend-mode: exclusion; color: white;
+        }
+        .back-link {
+            font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase;
+            cursor: pointer; display: flex; align-items: center; gap: 0.5rem;
+            text-decoration: none; color: white;
+        }
+        .back-link:hover { color: var(--accent); }
+
+        .theme-toggle {
+            background: none; border: 1px solid white; border-radius: 50px;
+            padding: 0.5rem 1rem; font-family: var(--font-mono);
+            font-size: 0.75rem; text-transform: uppercase; color: white;
+            cursor: none; transition: 0.3s;
+        }
+        .theme-toggle:hover { background: white; color: black; }
+
+        /* --- ARCHIVE HEADER --- */
+        .archive-header {
+            padding: 20vh 5% 5vh 5%;
+            border-bottom: 1px solid var(--line-color);
+            position: relative; z-index: 10;
+        }
+        .archive-title {
+            font-size: clamp(3rem, 12vw, 10rem); line-height: 0.85; font-weight: 700; text-transform: uppercase;
+            color: var(--text-main);
+        }
+        .archive-meta {
+            display: flex; justify-content: space-between; margin-top: 2rem;
+            font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted);
+        }
+
+        /* --- PROJECT LIST --- */
+        .project-list { 
+            padding: 0 5%; position: relative; z-index: 20; 
+            background: var(--bg-color);
+        }
+        .project-row {
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--line-color);
+            display: flex; justify-content: space-between; align-items: baseline;
+            cursor: pointer; transition: all 0.3s;
+            position: relative;
+            opacity: 1; 
+        }
+        .project-row:hover { padding-left: 2rem; }
+        
+        .row-title {
+            font-size: clamp(1.5rem, 4vw, 4rem); 
+            font-family: 'Clash Display'; font-weight: 500; text-transform: uppercase;
+            transition: color 0.3s;
+            color: var(--text-main);
+        }
+        .project-row:hover .row-title { color: var(--accent); font-style: italic; }
+        
+        .row-cats {
+            font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted);
+            text-transform: uppercase; display: none;
+        }
+        @media(min-width: 768px) { .row-cats { display: block; } }
+
+        .row-year {
+            font-family: var(--font-mono); font-size: 0.9rem; color: var(--text-main);
+        }
+
+        /* --- FLOATING PREVIEW (FIXED BORDER) --- */
+        .preview-container {
+            position: fixed; top: 0; left: 0; width: 320px; height: 220px;
+            pointer-events: none; 
+            z-index: 1500; 
+            opacity: 0; visibility: hidden;
+            transform: translate(-50%, -50%) scale(0.8);
+            transition: opacity 0.3s, transform 0.3s;
+            overflow: hidden; /* Clips content */
+            
+            background: var(--bg-color);
+            box-shadow: 0 0 30px var(--accent-glow);
+            
+            /* Visual Border */
+            border: 1px solid var(--accent);
+            /* Clip Path creates the angle */
+            clip-path: polygon(
+                0 0, 
+                100% 0, 
+                100% calc(100% - 20px), 
+                calc(100% - 20px) 100%, 
+                0 100%
+            );
+        }
+
+        /* THE FIX: Pseudo-element to draw the missing diagonal border */
+        .preview-container::after {
+            content: '';
+            position: absolute;
+            bottom: 8px; /* Fine-tuned position */
+            right: -6px; /* Fine-tuned position */
+            width: 35px; /* Hypotenuse length approx */
+            height: 1px;
+            background: var(--accent);
+            transform: rotate(-45deg);
+            transform-origin: center;
+            z-index: 50;
+            pointer-events: none;
+        }
+        
+        .preview-header {
+            height: 24px; background: rgba(0,0,0,0.5);
+            border-bottom: 1px solid var(--accent);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 0.5rem; position: relative; z-index: 10;
+            font-family: var(--font-mono); font-size: 0.6rem; color: var(--accent);
+        }
+
+        .preview-scanlines {
+            position: absolute; inset: 0; pointer-events: none; z-index: 5;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.3) 51%);
+            background-size: 100% 3px; opacity: 0.3;
+        }
+
+        .preview-img {
+            width: 100%; height: 100%; object-fit: cover;
+            position: absolute; top: 0; left: 0; opacity: 0;
+            transition: opacity 0.2s; filter: grayscale(50%) contrast(1.2);
+        }
+        .preview-img.active { opacity: 1; }
+
+        /* --- PROJECT MODAL (Z-Index 2000) --- */
+        .project-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: var(--modal-overlay);
+            z-index: 2000; /* Topmost Layer */
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden;
+            backdrop-filter: blur(8px);
+        }
+        
+        .modal-content {
+            width: 95vw; height: 90vh;
+            background: var(--bg-color);
+            border: 1px solid var(--accent);
+            box-shadow: 0 0 40px var(--accent-glow);
+            position: relative; overflow: hidden;
+            display: flex; flex-direction: column;
+        }
+        @media(min-width: 768px) { 
+            .modal-content { 
+                width: 90vw; height: 85vh;
+                display: grid; grid-template-columns: 1.5fr 1fr; 
+            } 
+        }
+
+        /* Decorative Corners */
+        .modal-content::before, .modal-content::after {
+            content: ''; position: absolute; width: 20px; height: 20px;
+            border: 3px solid var(--accent); pointer-events: none; z-index: 20;
+        }
+        .modal-content::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+        .modal-content::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
+
+        /* Scanlines */
+        .modal-scanlines {
+            position: absolute; inset: 0; pointer-events: none; z-index: 5;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.2) 51%);
+            background-size: 100% 4px; opacity: 0.1;
+        }
+
+        /* Image Section */
+        .modal-img-wrapper {
+            width: 100%;
+            height: 35vh;
+            position: relative; overflow: hidden; 
+            border-bottom: 1px solid var(--line-color);
+            flex-shrink: 0;
+        }
+        @media(min-width: 768px) {
+            .modal-img-wrapper {
+                height: 100%; border-bottom: none; border-right: 1px solid var(--line-color);
+            }
+        }
+        .modal-img {
+            width: 100%; height: 100%; object-fit: cover; 
+            filter: grayscale(100%); transition: filter 0.5s;
+        }
+        .modal-content:hover .modal-img { filter: grayscale(0%); }
+        
+        /* Details Section */
+        .modal-details {
+            padding: 2rem; 
+            display: flex; flex-direction: column; justify-content: space-between;
+            position: relative; 
+            overflow-y: auto; flex-grow: 1; z-index: 20; padding-top: 4rem;
+        }
+
+        /* Close Button */
+        .modal-close {
+            position: absolute; top: 1rem; right: 1rem;
+            font-family: var(--font-mono); cursor: pointer;
+            border: 1px solid var(--accent); padding: 0.5rem 1rem;
+            font-size: 0.75rem; text-transform: uppercase; color: var(--accent);
+            transition: 0.3s; z-index: 60; 
+            background: var(--bg-color); 
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .modal-close:hover { background: var(--accent); color: var(--bg-color); box-shadow: 0 0 15px var(--accent-glow); }
+
+        /* Typography */
+        .modal-title {
+            font-family: 'Clash Display'; font-size: clamp(2rem, 3.5vw, 4rem); 
+            font-weight: 700; text-transform: uppercase; margin-bottom: 0.5rem; line-height: 0.9;
+            color: var(--text-main);
+        }
+        .modal-meta {
+            font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); margin-bottom: 1.5rem;
+            display: flex; align-items: center; gap: 0.5rem; letter-spacing: 0.1em;
+        }
+        .modal-meta::before { content: '///'; }
+
+        .modal-desc {
+            font-size: 1rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 2rem;
+            max-width: 60ch;
+        }
+        
+        /* Actions */
+        .modal-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: auto; }
+        .action-btn {
+            flex: 1; min-width: 140px; text-align: center;
+            padding: 1rem 1.5rem; border: 1px solid var(--accent);
+            background: transparent; color: var(--accent);
+            font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700;
+            text-transform: uppercase; cursor: pointer; transition: all 0.3s;
+            text-decoration: none;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+        }
+        .action-btn:hover {
+            background: var(--accent); color: var(--bg-color); box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        /* Status Bar */
+        .modal-status-bar {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            padding: 0.5rem 1.5rem; font-family: var(--font-mono);
+            font-size: 0.65rem; color: var(--text-muted);
+            border-top: 1px solid var(--line-color);
+            background: var(--bg-color);
+            display: flex; justify-content: space-between;
+            z-index: 30; pointer-events: none;
+        }
+        .status-live { color: var(--accent); animation: blink 2s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        /* --- CONTACT FOOTER (SAME AS MAIN) --- */
+        .contact-footer {
+            background: var(--bg-color); padding-top: 10vh; position: relative; z-index: 20;
+            border-top: 1px solid var(--line-color);
+        }
+        .contact-big-text {
+            font-size: 12vw; line-height: 0.8; font-weight: 800; text-transform: uppercase;
+            color: var(--bg-color); -webkit-text-stroke: 1px var(--text-muted);
+            transition: color 0.3s, -webkit-text-stroke 0.3s; cursor: none;
+        }
+        .contact-big-text:hover { color: var(--accent); -webkit-text-stroke: 0px; }
+        
+        .marquee-strip {
+            overflow: hidden; border-top: 1px solid var(--line-color);
+            border-bottom: 1px solid var(--line-color); padding: 1rem 0; background: var(--window-bg);
+            display: flex;
+        }
+        .marquee-content { 
+            display: flex; animation: streamScroll 20s linear infinite; min-width: max-content;
+        }
+        .marquee-item {
+            font-size: clamp(2rem, 6vw, 6rem); font-weight: 800; uppercase; 
+            color: var(--line-color); margin-right: 4rem; white-space: nowrap;
+        }
+        @keyframes streamScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        .footer-bottom {
+            padding: 1rem; text-align: center; font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted);
+            background: var(--bg-color);
+        }
+
+        /* --- CURSOR --- */
+        .cursor-dot {
+            width: 8px; height: 8px; background: var(--accent);
+            position: fixed; border-radius: 50%; pointer-events: none; z-index: 9999;
+        }
+        .cursor-follower {
+            width: 40px; height: 40px; border: 1px solid var(--text-muted);
+            position: fixed; border-radius: 50%; pointer-events: none; z-index: 9998;
+            transition: transform 0.1s, width 0.3s, height 0.3s; opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- PROJECT MODAL -->
+    <div class="project-modal">
+        <div class="modal-content">
+            <div class="modal-scanlines"></div>
+            <button class="modal-close hoverable">CLOSE_MODAL [ESC]</button>
+            
+            <div class="modal-img-wrapper">
+                <img src="" class="modal-img" id="modal-image">
+            </div>
+            
+            <div class="modal-details">
+                <div>
+                    <h2 class="modal-title" id="modal-title">PROJECT NAME</h2>
+                    <div class="modal-meta" id="modal-meta">WEBGL / 2024</div>
+                    <p class="modal-desc" id="modal-desc">
+                        Project description placeholder.
+                    </p>
+                </div>
+                <div class="modal-actions">
+                    <a href="#" class="action-btn hoverable" id="btn-github" target="_blank">GITHUB_REPO</a>
+                    <a href="#" class="action-btn hoverable" id="btn-live" target="_blank">LAUNCH_SITE</a>
+                </div>
+            </div>
+            
+            <div class="modal-status-bar">
+                <span class="status-live">● SYS.ONLINE</span>
+                <span>ENCRYPTION: SECURE</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- FLOATING PREVIEW (UPDATED STYLE) -->
+    <div class="preview-container">
+        <div class="preview-header">
+            <span>PREVIEW_MODE</span>
+            <span>● REC</span>
+        </div>
+        <div class="preview-scanlines"></div>
+        
+        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=500" class="preview-img" id="img-omnix">
+        <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=500" class="preview-img" id="img-velocita">
+        <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=500" class="preview-img" id="img-echo">
+        <img src="https://images.unsplash.com/photo-1519681393784-d8e5b5a4570e?q=80&w=500" class="preview-img" id="img-nebula">
+        <img src="https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=500" class="preview-img" id="img-vertex">
+        <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=500" class="preview-img" id="img-aether">
+        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=500" class="preview-img" id="img-cipher">
+        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=500" class="preview-img" id="img-glitch">
+    </div>
+
+    <nav class="navbar">
+        <a href="index.html" class="back-link hoverable">
+            <span>←</span> BACK TO BASE
+        </a>
+        <button class="theme-toggle hoverable" id="themeBtn">
+            <span class="light-text">LIGHT</span> / <span class="dark-text">DARK</span>
+        </button>
+    </nav>
+
+    <div id="smooth-wrapper">
+        <div id="smooth-content">
+            
+            <header class="archive-header">
+                <h1 class="archive-title">Archive</h1>
+                <div class="archive-meta">
+                    <span>SELECTED WORKS (2020 - 2025)</span>
+                    <span>SCROLL TO INDEX</span>
+                </div>
+            </header>
+
+            <div class="project-list">
+                <!-- List Items -->
+                <div class="project-row hoverable" data-id="omnix" data-img="img-omnix">
+                    <div class="row-title">OmniXForge</div><div class="row-cats">AI / Platform</div><div class="row-year">2024</div>
+                </div>
+                <div class="project-row hoverable" data-id="velocita" data-img="img-velocita">
+                    <div class="row-title">Velocita.GL</div><div class="row-cats">WebGL / Automotive</div><div class="row-year">2024</div>
+                </div>
+                <div class="project-row hoverable" data-id="echo" data-img="img-echo">
+                    <div class="row-title">Echo UI</div><div class="row-cats">Design System</div><div class="row-year">2023</div>
+                </div>
+                <div class="project-row hoverable" data-id="nebula" data-img="img-nebula">
+                    <div class="row-title">Nebula Stream</div><div class="row-cats">Data Viz / React</div><div class="row-year">2023</div>
+                </div>
+                <div class="project-row hoverable" data-id="vertex" data-img="img-vertex">
+                    <div class="row-title">Vertex Logic</div><div class="row-cats">Backend / Python</div><div class="row-year">2022</div>
+                </div>
+                <div class="project-row hoverable" data-id="aether" data-img="img-aether">
+                    <div class="row-title">Aether Labs</div><div class="row-cats">Web3 / Solidity</div><div class="row-year">2022</div>
+                </div>
+                <div class="project-row hoverable" data-id="cipher" data-img="img-cipher">
+                    <div class="row-title">Cipher Punk</div><div class="row-cats">Generative Art</div><div class="row-year">2021</div>
+                </div>
+                <div class="project-row hoverable" data-id="glitch" data-img="img-glitch">
+                    <div class="row-title">Glitch Mode</div><div class="row-cats">Experiment</div><div class="row-year">2020</div>
+                </div>
+            </div>
+
+            <!-- CONTACT SECTION (FROM MAIN) -->
+            <section id="contact" class="contact-footer">
+                <div class="marquee-strip">
+                    <div class="marquee-content">
+                        <span class="marquee-item">Let's Build The Future • Open For Work • Let's Build The Future • Open For Work •</span>
+                        <span class="marquee-item">Let's Build The Future • Open For Work • Let's Build The Future • Open For Work •</span>
+                    </div>
+                </div>
+                <div class="min-h-[80vh] flex flex-col justify-center items-center px-4 text-center">
+                    <div class="font-mono text-[var(--accent)] mb-4 text-xs">05 // INITIATE PROTOCOL</div>
+                    <a href="mailto:iamkavy47@gmail.com" class="contact-big-text hoverable">LET'S<br>WORK</a>
+                    <div class="flex gap-8 mt-12 uppercase text-sm tracking-widest font-bold font-mono text-[var(--text-main)]">
+                        <a href="#" class="hover:text-[var(--accent)] transition-colors hoverable">LinkedIn</a>
+                        <a href="#" class="hover:text-[var(--accent)] transition-colors hoverable">GitHub</a>
+                        <a href="#" class="hover:text-[var(--accent)] transition-colors hoverable">Twitter</a>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    © 2025 KAVY PORWAL. SYSTEM OPERATIONAL.
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script>
+        // --- DATA ---
+        const projectsData = {
+            "omnix": {
+                title: "OmniXForge",
+                meta: "AI ARCHITECTURE / 2024",
+                desc: "A cutting-edge AI platform designed to streamline model deployment and architectural scalability. Built with a React frontend and Python backend, OmniXForge visualizes complex neural networks in real-time.",
+                img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000",
+                github: "#", live: "#"
+            },
+            "velocita": {
+                title: "Velocita.GL",
+                meta: "WEBGL / 2024",
+                desc: "An immersive automotive showcase experience. Utilizing Three.js and WebGL shaders to render photorealistic car models with interactive physics and custom lighting environments.",
+                img: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1000",
+                github: "#", live: "#"
+            },
+            "echo": {
+                title: "Echo UI",
+                meta: "DESIGN SYSTEM / 2023",
+                desc: "A comprehensive enterprise-grade design system. Focuses on accessibility (a11y), atomic component structure, and seamless dark-mode integration using CSS variables and React Context.",
+                img: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1000",
+                github: "#", live: "#"
+            },
+            "nebula": {
+                title: "Nebula Stream",
+                meta: "DATA VIZ / 2023",
+                desc: "Real-time data visualization dashboard for high-frequency trading. Handles millions of data points using D3.js and WebSockets for sub-millisecond updates.",
+                img: "https://images.unsplash.com/photo-1519681393784-d8e5b5a4570e?q=80&w=1000",
+                github: "#", live: "#"
+            },
+            "vertex": {
+                title: "Vertex Logic",
+                meta: "BACKEND / 2022",
+                desc: "Scalable cloud infrastructure solution. Automates server provisioning and load balancing using Python scripts and AWS Lambda functions.",
+                img: "https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=1000",
+                github: "#", live: "#"
+            },
+            "aether": {
+                title: "Aether Labs",
+                meta: "WEB3 / 2022",
+                desc: "Decentralized application (dApp) for trading unique digital assets. Smart contracts written in Solidity on the Ethereum blockchain.",
+                img: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=1000",
+                github: "#", live: "#"
+            },
+            "cipher": {
+                title: "Cipher Punk",
+                meta: "GENERATIVE ART / 2021",
+                desc: "Algorithmic art generator exploring chaos theory and fractal patterns. Users can mint their unique generations as NFTs.",
+                img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000",
+                github: "#", live: "#"
+            },
+            "glitch": {
+                title: "Glitch Mode",
+                meta: "EXPERIMENT / 2020",
+                desc: "Experimental portfolio site utilizing CSS mix-blend-modes and canvas manipulation to create a brutalist, glitch-art aesthetic.",
+                img: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1000",
+                github: "#", live: "#"
+            }
+        };
+
+        // --- INIT ---
+        document.addEventListener("DOMContentLoaded", (event) => {
+            
+            gsap.registerPlugin(ScrollTrigger);
+            const lenis = new Lenis();
+            function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+            requestAnimationFrame(raf);
+
+            // Theme Toggle
+            const themeBtn = document.getElementById('themeBtn');
+            if(localStorage.getItem('theme') === 'light') {
+                document.body.classList.add('light-mode');
+            }
+            themeBtn.addEventListener('click', () => {
+                document.body.classList.toggle('light-mode');
+                localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+            });
+
+            // Cursor
+            const cursor = document.querySelector('.cursor-dot');
+            const follower = document.querySelector('.cursor-follower');
+            let mouseX = 0, mouseY = 0;
+            window.addEventListener('mousemove', e => {
+                mouseX = e.clientX; mouseY = e.clientY;
+                gsap.to(cursor, { x: mouseX, y: mouseY, duration: 0.1 });
+                gsap.to(follower, { x: mouseX - 20, y: mouseY - 20, duration: 0.2 });
+                // Float preview
+                gsap.to(".preview-container", { x: mouseX, y: mouseY, duration: 0.4, ease: "power2.out" });
+            });
+
+            // Hover Effects & Modal
+            const previewContainer = document.querySelector('.preview-container');
+            const previewImages = document.querySelectorAll('.preview-img');
+            const modal = document.querySelector('.project-modal');
+            const modalContent = document.querySelector('.modal-content');
+            const modalClose = document.querySelector('.modal-close');
+            
+            // Modal Elements
+            const mImg = document.getElementById('modal-image');
+            const mTitle = document.getElementById('modal-title');
+            const mMeta = document.getElementById('modal-meta');
+            const mDesc = document.getElementById('modal-desc');
+            const btnGh = document.getElementById('btn-github');
+            const btnLive = document.getElementById('btn-live');
+
+            document.querySelectorAll('.project-row').forEach(row => {
+                row.addEventListener('mouseenter', () => {
+                    const imgId = row.getAttribute('data-img');
+                    const targetImg = document.getElementById(imgId);
+                    gsap.to(previewContainer, { autoAlpha: 1, scale: 1, duration: 0.3 });
+                    previewImages.forEach(img => img.classList.remove('active'));
+                    if(targetImg) targetImg.classList.add('active');
+                    gsap.to(follower, { scale: 0, duration: 0.2 }); 
+                });
+                row.addEventListener('mouseleave', () => {
+                    gsap.to(previewContainer, { autoAlpha: 0, scale: 0.8, duration: 0.3 });
+                    gsap.to(follower, { scale: 1, duration: 0.2 });
+                });
+                row.addEventListener('click', () => {
+                    const id = row.getAttribute('data-id');
+                    openModal(id);
+                });
+            });
+
+            // Modal Functions
+            function openModal(id) {
+                const data = projectsData[id];
+                if(!data) return;
+                mImg.src = data.img;
+                mTitle.textContent = data.title;
+                mMeta.textContent = data.meta;
+                mDesc.textContent = data.desc;
+                btnGh.href = data.github;
+                btnLive.href = data.live;
+                
+                gsap.to(modal, { autoAlpha: 1, duration: 0.4 });
+                gsap.fromTo(modalContent, { scale: 0.9, y: 50 }, { scale: 1, y: 0, duration: 0.6, ease: "expo.out" });
+                document.body.style.overflow = 'hidden'; // Lock scroll
+            }
+
+            function closeModal() {
+                gsap.to(modal, { autoAlpha: 0, duration: 0.3 });
+                gsap.to(modalContent, { scale: 0.9, y: 50, duration: 0.3 });
+                document.body.style.overflow = ''; // Unlock scroll
+            }
+
+            modalClose.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
+            document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeModal(); });
+
+            // Entrance Animations
+            const tl = gsap.timeline();
+            tl.from(".archive-title", { y: 100, opacity: 0, duration: 1, ease: "power4.out" })
+              .from(".archive-meta", { opacity: 0, y: 20, duration: 0.8 }, "-=0.5")
+              .fromTo(".project-row", { y: 50, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: 0.1, duration: 0.8, ease: "power2.out" }, "-=0.5");
+
+            // Contact Animations
+            const contactText = new SplitType('.contact-big-text', { types: 'chars' });
+            gsap.from(contactText.chars, {
+                yPercent: 100, opacity: 0, stagger: 0.05,
+                scrollTrigger: { trigger: ".contact-big-text", start: "top 80%" }
+            });
+
+        });
+    </script>
+</body>
+</html>
