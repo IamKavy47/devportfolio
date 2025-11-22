@@ -1,260 +1,773 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kavy Porwal | Portfolio Under Construction</title>
+    <title>Kavy Porwal | Creative Engineer</title>
+    
+    <!-- Font: Clash Display & Satoshi -->
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
+    <!-- Font: Barcode & Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39+Text&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- GSAP, ScrollTrigger, Lenis, SplitType -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="https://unpkg.com/split-type"></script>
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap');
-
-        body {
-            font-family: 'Outfit', sans-serif;
-            overflow: hidden;
-            background-color: #ffffff; /* White background */
-            color: #1e293b; /* Slate-800 for text */
+        /* --- CSS VARIABLES & THEMING --- */
+        :root {
+            /* Dark Mode (Default) */
+            --bg-color: #050505;
+            --text-main: #EDEDED;
+            --text-muted: #888888;
+            --accent: #DBFF00; /* Acid Green */
+            --accent-glow: rgba(219, 255, 0, 0.2);
+            --line-color: rgba(255, 255, 255, 0.12);
+            --window-bg: #0a0a0a;
+            --card-bg: rgba(20, 20, 20, 0.95);
+            --curtain-bg: #050505;
+            --id-bg: rgba(20, 20, 20, 0.8);
+            --grid-color: rgba(255, 255, 255, 0.05);
+            --overlay-gradient: linear-gradient(to top, #0a0a0a 0%, rgba(0,0,0,0) 100%);
+            --font-mono: 'JetBrains Mono', monospace;
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #ffffff; 
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #eab308; 
-            border-radius: 4px;
-        }
-
-        /* Clean Minimal Card */
-        .clean-card {
-            background: #ffffff;
-            border: 1px solid #f1f5f9; /* Very subtle border */
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05); /* Soft, professional shadow */
+        body.light-mode {
+            /* Light Mode (Industrial Yellow) */
+            --bg-color: #EBEBEB;
+            --text-main: #111111;
+            --text-muted: #555555;
+            --accent: #D4A000;
+            --accent-glow: rgba(212, 160, 0, 0.2);
+            --line-color: rgba(0, 0, 0, 0.15);
+            --window-bg: #FFFFFF;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --curtain-bg: #EBEBEB;
+            --id-bg: rgba(255, 255, 255, 0.8);
+            --grid-color: rgba(0, 0, 0, 0.05);
+            --overlay-gradient: linear-gradient(to top, #ffffff 0%, rgba(255,255,255,0) 100%);
         }
 
-        /* Social Button Hover Effects */
-        .social-btn {
-            transition: all 0.2s ease-in-out;
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Satoshi', sans-serif;
+            width: 100%;
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+            cursor: none; /* Custom cursor */
         }
 
-        .social-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(234, 179, 8, 0.2);
-        }
+        h1, h2, h3, .display-font { font-family: 'Clash Display', sans-serif; }
+        .font-mono { font-family: var(--font-mono); }
 
-        /* Typing Cursor */
-        .cursor {
-            display: inline-block;
-            width: 3px;
-            background-color: #eab308;
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+        /* --- NAVBAR & THEME TOGGLE --- */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%;
+            padding: 1.5rem 5%; display: flex; justify-content: space-between;
+            align-items: center; z-index: 1000; mix-blend-mode: exclusion; color: white;
         }
         
-        #canvas-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
+        .nav-links-container { display: none; }
+        @media (min-width: 768px) { .nav-links-container { display: flex; } }
+
+        .nav-link {
+            position: relative; text-transform: uppercase; font-size: 0.85rem;
+            font-weight: 600; letter-spacing: 0.05em; margin-left: 2rem;
+            overflow: hidden; cursor: none; color: white;
         }
+        .nav-link::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px;
+            background: white; transform: translateX(-101%); transition: transform 0.3s ease;
+        }
+        .nav-link:hover::after { transform: translateX(0); }
+
+        .theme-toggle {
+            background: none; border: 1px solid white; border-radius: 50px;
+            padding: 0.5rem 1rem; font-family: var(--font-mono);
+            font-size: 0.75rem; text-transform: uppercase; color: white;
+            cursor: none; margin-left: 1rem; transition: 0.3s;
+        }
+        .theme-toggle:hover { background: white; color: black; }
+
+        .resume-btn {
+            background: var(--accent); color: var(--bg-color); border: 1px solid var(--accent);
+            border-radius: 50px; padding: 0.5rem 1.2rem; font-family: var(--font-mono);
+            font-size: 0.75rem; font-weight: 700; text-transform: uppercase; text-decoration: none;
+            cursor: none; margin-left: 2rem; transition: all 0.3s; display: inline-block;
+        }
+        .resume-btn:hover { background: transparent; color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); }
+
+        /* --- PRELOADER --- */
+        .preloader {
+            position: fixed; inset: 0; background: #000; z-index: 9999;
+            display: flex; flex-direction: column; justify-content: space-between;
+            padding: 2rem; color: var(--accent); font-family: 'Clash Display', sans-serif; overflow: hidden;
+        }
+        .loader-bar-wrapper { width: 100%; height: 2px; background: #222; margin-top: 20px; }
+        .loader-bar { width: 0%; height: 100%; background: var(--accent); }
+        .loader-percent { font-size: 15vw; font-weight: 800; line-height: 0.8; align-self: flex-end; }
+
+        /* --- HERO --- */
+        .hero-text-line { overflow: hidden; display: flex; line-height: 0.85; }
+        .hero-title { font-size: clamp(3rem, 13vw, 12rem); font-weight: 700; text-transform: uppercase; line-height: 0.9; }
+        .outline-text { -webkit-text-stroke: 1px var(--text-muted); color: transparent; transition: all 0.3s; }
+        .outline-text:hover { color: var(--accent); -webkit-text-stroke: 0px; }
+        .split-heading, .hero-line-deco, .hero-meta { opacity: 0; }
+
+        /* --- WORKS SECTION --- */
+        .works-wrapper { position: relative; width: 100%; height: 100vh; overflow: hidden; }
+        .curtain {
+            position: absolute; left: 0; width: 100%; height: 50%;
+            background: var(--curtain-bg); z-index: 50; overflow: hidden;
+            display: flex; justify-content: center; border-bottom: 1px solid var(--line-color);
+            transition: background-color 0.5s;
+        }
+        .curtain-top { top: 0; align-items: flex-end; border-bottom: 1px solid var(--line-color); }
+        .curtain-bottom { bottom: 0; align-items: flex-start; border-top: 1px solid var(--line-color); }
+        .split-work-text {
+            font-family: 'Clash Display', sans-serif; font-size: 20vw; font-weight: 800;
+            line-height: 1; color: var(--text-main); position: relative;
+        }
+        .curtain-top .split-work-text { transform: translateY(50%); }
+        .curtain-bottom .split-work-text { transform: translateY(-50%); }
+
+        .gallery-track-wrapper {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;
+            display: flex; align-items: center;
+            background: radial-gradient(circle at center, var(--window-bg) 0%, var(--bg-color) 100%);
+        }
+        .gallery-track { display: flex; flex-wrap: nowrap; padding: 0 5vw; gap: 5vw; }
+
+        /* --- PROJECT CARD --- */
+        .project-card {
+            width: 90vw; height: 70vh; flex-shrink: 0;
+            background: var(--card-bg); border: 1px solid var(--line-color);
+            position: relative; display: flex; flex-direction: column;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            overflow: hidden; backdrop-filter: blur(10px);
+        }
+        @media (min-width: 768px) { .project-card { width: 90vw; height: 80vh; } } 
+        
+        .project-card::before, .project-card::after {
+            content: ''; position: absolute; width: 20px; height: 20px;
+            border: 2px solid var(--accent); transition: 0.3s; z-index: 30; opacity: 0.5;
+        }
+        .project-card::before { top: 0; left: 0; border-right: 0; border-bottom: 0; }
+        .project-card::after { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+
+        .project-card:hover { border-color: var(--accent); box-shadow: 0 0 60px var(--accent-glow); transform: scale(1.01); }
+        .project-card:hover::before, .project-card:hover::after { width: 100%; height: 100%; opacity: 1; }
+
+        .deck-header {
+            height: 30px; border-bottom: 1px solid var(--line-color);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 1rem; font-family: var(--font-mono); font-size: 0.65rem;
+            color: var(--accent); letter-spacing: 0.1em; background: rgba(0,0,0,0.05);
+        }
+        .status-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 5px var(--accent); animate: pulse 2s infinite; }
+
+        .deck-body { flex-grow: 1; position: relative; overflow: hidden; }
+        .project-img {
+            width: 100%; height: 100%; object-fit: cover;
+            filter: grayscale(100%) contrast(1.1); transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1), filter 0.5s;
+        }
+        .project-card:hover .project-img { filter: grayscale(0%); transform: scale(1.05); }
+        
+        .scan-overlay {
+            position: absolute; inset: 0; pointer-events: none;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.5) 51%);
+            background-size: 100% 4px; opacity: 0.1; z-index: 10;
+        }
+
+        .deck-info {
+            position: absolute; bottom: 0; left: 0; width: 100%; padding: 2rem;
+            background: var(--overlay-gradient);
+            border-top: 1px solid var(--accent); transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex; flex-direction: column; justify-content: flex-end;
+            z-index: 20; backdrop-filter: blur(15px);
+        }
+        .project-card:hover .deck-info { transform: translateY(0); }
+        
+        .project-title {
+            font-family: 'Clash Display'; font-size: 3rem; font-weight: 700;
+            text-transform: uppercase; color: var(--text-main); line-height: 0.9; margin-bottom: 0.5rem;
+        }
+        .project-desc { font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); max-width: 70%; }
+        
+        .project-actions { display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
+        .action-btn {
+            padding: 0.8rem 1.5rem; border: 1px solid var(--accent); background: transparent;
+            color: var(--accent); font-family: var(--font-mono); font-size: 0.8rem;
+            font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer;
+            transition: all 0.3s; text-decoration: none; display: inline-flex; align-items: center;
+            justify-content: center; clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+        }
+        .action-btn:hover { background: var(--accent); color: var(--bg-color); box-shadow: 0 0 20px var(--accent-glow); }
+
+        .tech-tags { display: flex; gap: 1rem; margin-top: 1.5rem; }
+        .tech-tag {
+            border: 1px solid var(--line-color); padding: 0.2rem 0.8rem;
+            font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent);
+            text-transform: uppercase; border-radius: 2px;
+        }
+
+        /* --- ARCHIVE CARD --- */
+        .archive-card {
+            background: var(--card-bg); overflow: hidden; text-decoration: none; cursor: pointer;
+        }
+        .archive-grid {
+            position: absolute; inset: -50%;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+            transform: perspective(500px) rotateX(60deg);
+            animation: gridScroll 20s linear infinite; pointer-events: none; opacity: 0.5;
+        }
+        @keyframes gridScroll { 0% { transform: perspective(500px) rotateX(60deg) translateY(0); } 100% { transform: perspective(500px) rotateX(60deg) translateY(40px); } }
+        
+        .archive-core {
+            width: 120px; height: 120px; border: 1px dashed var(--line-color); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; position: relative; transition: all 0.5s;
+        }
+        .archive-card:hover .archive-core { border-color: var(--accent); box-shadow: 0 0 30px var(--accent-glow); transform: scale(1.1); }
+        
+        .core-inner {
+            width: 100%; height: 100%; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; z-index: 2;
+            background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, transparent 70%);
+        }
+        
+        .core-ring {
+            position: absolute; inset: -5px; border-radius: 50%; border: 2px solid transparent;
+            border-top-color: var(--accent); border-bottom-color: var(--accent);
+            opacity: 0; transition: opacity 0.3s; animation: spin 3s linear infinite;
+        }
+        .archive-card:hover .core-ring { opacity: 1; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .glitch-text { color: var(--text-muted); transition: color 0.3s; }
+        .archive-card:hover .glitch-text {
+            color: var(--accent); text-shadow: 2px 0 var(--text-main), -2px 0 red; animation: glitch 0.3s infinite;
+        }
+        @keyframes glitch {
+            0% { transform: translate(0) } 20% { transform: translate(-2px, 2px) }
+            40% { transform: translate(-2px, -2px) } 60% { transform: translate(2px, 2px) }
+            80% { transform: translate(2px, -2px) } 100% { transform: translate(0) }
+        }
+        
+        .archive-scan {
+            position: absolute; top: 0; left: 0; width: 100%; height: 5px;
+            background: var(--accent); opacity: 0; box-shadow: 0 0 15px var(--accent);
+            animation: scanDown 3s linear infinite;
+        }
+        .archive-card:hover .archive-scan { opacity: 0.5; }
+        @keyframes scanDown { 0% { top: -10%; } 100% { top: 110%; } }
+
+        /* --- ABOUT ME --- */
+        .about-section {
+            position: relative; padding: 15vh 5%; border-top: 1px solid var(--line-color);
+            background: var(--bg-color); display: flex; justify-content: center; align-items: center; perspective: 1000px;
+        }
+        .id-card {
+            width: 100%; max-width: 900px; background: var(--id-bg); border: 1px solid var(--line-color);
+            border-radius: 12px; padding: 2rem; position: relative; overflow: hidden;
+            box-shadow: 0 20px 60px var(--card-shadow); backdrop-filter: blur(20px);
+            transform-style: preserve-3d; transition: transform 0.1s;
+        }
+        .id-card::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(125deg, transparent 30%, rgba(255,255,255,0.05) 45%, transparent 50%);
+            z-index: 2; pointer-events: none; background-size: 200% 200%; opacity: 0.5;
+        }
+        .id-header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--line-color); padding-bottom: 1.5rem; margin-bottom: 2rem;
+        }
+        .id-logo { font-family: 'Clash Display'; font-weight: 700; font-size: 1.5rem; color: var(--text-main); }
+        .id-chip {
+            width: 45px; height: 35px; background: linear-gradient(135deg, #d4af37, #f9e076);
+            border-radius: 4px; position: relative; border: 1px solid #b8860b;
+        }
+        .id-body { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+        @media(min-width: 768px) { .id-body { grid-template-columns: 300px 1fr; } }
+        .id-photo-zone {
+            border: 1px solid var(--accent); height: 350px; position: relative;
+            background: url('/assets/kavy.png') center/cover;
+            filter: grayscale(100%); display: flex; flex-direction: column; justify-content: flex-end;
+        }
+        .id-photo-zone::after {
+            content: ''; position: absolute; inset: 0; background: linear-gradient(to top, var(--accent-glow), transparent);
+        }
+        .id-scan-line {
+            position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: var(--accent);
+            animation: scan 3s infinite linear; box-shadow: 0 0 10px var(--accent);
+        }
+        @keyframes scan { 0% { top: 0; opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+        .id-details { display: flex; flex-direction: column; justify-content: space-between; }
+        .id-row { margin-bottom: 1.2rem; }
+        .id-label { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.2rem; }
+        .id-value { font-size: 1.2rem; font-weight: 700; color: var(--text-main); text-transform: uppercase; }
+        .id-bio { font-size: 0.9rem; line-height: 1.6; color: var(--text-muted); margin-top: 1rem; border-top: 1px dashed var(--line-color); padding-top: 1rem; font-family: var(--font-mono); }
+        .barcode { font-family: 'Libre Barcode 39 Text', cursive; font-size: 2.5rem; color: var(--text-muted); opacity: 0.8; margin-top: auto; }
+
+        /* --- ARSENAL --- */
+        .arsenal-section { padding: 10vh 0; background: var(--bg-color); border-top: 1px solid var(--line-color); overflow: hidden; }
+        .stream-wrapper { margin-bottom: 2rem; width: 100%; overflow: hidden; display: flex; mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
+        .tech-stream { display: flex; gap: 2rem; animation: streamScroll 30s linear infinite; padding-left: 2rem; min-width: max-content; }
+        .tech-stream.reverse { animation-direction: reverse; }
+        @keyframes streamScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .tech-pill {
+            display: inline-flex; align-items: center; gap: 0.8rem; padding: 1rem 2.5rem;
+            border: 1px solid var(--line-color); border-radius: 100px; color: var(--text-muted);
+            font-family: var(--font-mono); font-weight: 600; font-size: 1rem; text-transform: uppercase;
+            transition: all 0.3s; cursor: none;
+        }
+        .tech-pill:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); transform: scale(1.05); }
+
+        /* --- FOOTER --- */
+        .contact-footer { background: var(--bg-color); padding-top: 10vh; position: relative; }
+        .contact-big-text {
+            font-size: 12vw; line-height: 0.8; font-weight: 800; text-transform: uppercase;
+            color: var(--bg-color); -webkit-text-stroke: 1px var(--text-muted);
+            transition: color 0.3s, -webkit-text-stroke 0.3s; cursor: none;
+        }
+        .contact-big-text:hover { color: var(--accent); -webkit-text-stroke: 0px; }
+        .marquee-strip {
+            overflow: hidden; border-top: 1px solid var(--line-color); border-bottom: 1px solid var(--line-color);
+            padding: 1rem 0; background: var(--window-bg); display: flex;
+        }
+        .marquee-content { display: flex; animation: streamScroll 20s linear infinite; min-width: max-content; }
+        .marquee-item { font-size: clamp(2rem, 6vw, 6rem); font-weight: 800; uppercase; color: var(--line-color); margin-right: 4rem; white-space: nowrap; }
+
+        /* --- UTILS --- */
+        .section-label { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); margin-bottom: 1rem; display: inline-block; border: 1px solid var(--accent); padding: 0.2rem 0.6rem; border-radius: 100px; }
+        .cursor-dot { width: 8px; height: 8px; background: var(--accent); position: fixed; border-radius: 50%; pointer-events: none; z-index: 10000; }
+        .cursor-follower { width: 40px; height: 40px; border: 1px solid var(--text-muted); position: fixed; border-radius: 50%; pointer-events: none; z-index: 9998; transition: transform 0.15s, width 0.3s, height 0.3s; opacity: 0.5; }
+        .grain { position: fixed; inset: 0; pointer-events: none; z-index: 9000; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E"); }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4 relative">
+<body>
 
-    <!-- Interactive Background -->
-    <div id="canvas-container">
-        <canvas id="bgCanvas"></canvas>
+    <div class="grain"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a href="#hero" class="font-bold text-xl tracking-tighter hoverable nav-link-smooth" style="color: var(--text-main); text-decoration: none;">KAVY®</a>
+        <div class="flex items-center">
+            <div class="nav-links-container">
+                <a href="#work-section" class="nav-link hoverable">Work</a>
+                <a href="#about" class="nav-link hoverable">ID</a>
+                <a href="#arsenal" class="nav-link hoverable">Arsenal</a>
+                <a href="#contact" class="nav-link hoverable">Contact</a>
+            </div>
+            
+            <!-- RESUME BUTTON -->
+            <a href="assets/resume.pdf" download="Kavy_Porwal_Resume" class="resume-btn hoverable">
+                Resume
+            </a>
+
+            <!-- THEME SWITCHER -->
+            <button class="theme-toggle hoverable" id="themeBtn">
+                <span class="light-text">LIGHT</span> / <span class="dark-text">DARK</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- PRELOADER -->
+    <div class="preloader">
+        <div class="loader-text-scramble" id="scramble">INITIALIZING...</div>
+        <div class="w-full">
+            <div class="flex justify-between items-end">
+                <span class="font-mono text-xs">SYSTEM CHECK // V.14.0</span>
+                <div class="loader-percent">0%</div>
+            </div>
+            <div class="loader-bar-wrapper"><div class="loader-bar"></div></div>
+        </div>
     </div>
 
-    <!-- Main Content -->
-    <main class="clean-card w-full max-w-lg rounded-3xl p-10 md:p-14 relative z-10 text-center">
-        
-        <!-- Construction Icon Area (Static Warning Sign) -->
-        <div class="mb-8 flex justify-center">
-            <div class="relative">
-                <!-- Removed Pulse Animation for cleaner look, just a soft glow -->
-                <div class="absolute inset-0 bg-yellow-400/20 rounded-full blur-xl transform scale-110"></div>
-                <!-- Icon Container -->
-                <div class="w-24 h-24 bg-yellow-50 rounded-full flex items-center justify-center border border-yellow-200 shadow-sm relative z-10">
-                    <!-- Static Icon (No animation class) -->
-                    <i class="fas fa-triangle-exclamation text-5xl text-yellow-500"></i>
+    <div id="smooth-wrapper">
+        <div id="smooth-content">
+
+            <!-- 1. HERO -->
+            <section id="hero" class="min-h-screen flex flex-col justify-center md:justify-end pb-20 px-4 md:px-10 pt-32 relative overflow-hidden">
+                <div class="relative z-10">
+                    <div class="hero-text-line"><h1 class="hero-title split-heading">Creative</h1></div>
+                    <div class="hero-text-line"><h1 class="hero-title outline-text split-heading">Engineer</h1></div>
+                    <div class="hero-text-line flex items-center gap-4">
+                        <div class="h-[1vw] md:h-[0.5vw] flex-grow bg-[var(--accent)] mt-2 hero-line-deco origin-left"></div>
+                        <h1 class="hero-title text-[var(--accent)] split-heading">& Artist</h1>
+                    </div>
                 </div>
-            </div>
+
+                <div class="flex flex-col md:flex-row justify-between mt-16 border-t border-[var(--line-color)] pt-6 hero-meta">
+                    <div class="w-full md:w-1/3">
+                        <p class="text-lg leading-relaxed text-[var(--text-muted)]">
+                            Architecting digital chaos into precision. <br>
+                            <span style="color: var(--text-main)">React • WebGL • AI Integration</span>
+                        </p>
+                    </div>
+                    <div class="flex gap-8 mt-8 md:mt-0 font-mono text-xs tracking-widest">
+                        <div><div style="color: var(--accent)" class="mb-1">LOC</div><div>MANDSAUR</div></div>
+                        <div><div style="color: var(--accent)" class="mb-1">STAT</div><div class="animate-pulse">AVAILABLE</div></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. WORKS (CYBER DECK) -->
+            <section id="work-section" class="works-wrapper">
+                <div class="curtain curtain-top"><h2 class="split-work-text">WORKS</h2></div>
+                <div class="curtain curtain-bottom"><h2 class="split-work-text">WORKS</h2></div>
+
+                <div class="gallery-track-wrapper">
+                    <div class="gallery-track">
+                        
+                        <!-- Deck 1 -->
+                        <div class="project-card hoverable">
+                            <div class="deck-header">
+                                <div>PROJECT_01 // CHATOXF</div>
+                                <div class="flex items-center gap-2"><div class="status-dot"></div>ONLINE</div>
+                            </div>
+                            <div class="deck-body">
+                                <div class="scan-overlay"></div>
+                                <img src="/assets/projects/chatoxf.png" class="project-img">
+                                <div class="deck-info">
+                                    <h3 class="project-title">ChatOXF</h3>
+                                    <p class="project-desc">A chat app built with HTML, CSS, JS, and Convex with GSAP animations. Features an AI assistant similar to WhatsApp's Meta AI.</p>
+                                    <div class="tech-tags">
+                                        <div class="tech-tag">HTML</div>
+                                        <div class="tech-tag">CSS</div>
+                                        <div class="tech-tag">JavaScript</div>
+                                        <div class="tech-tag">Convex</div>
+                                        <div class="tech-tag">GSAP</div>
+                                        <div class="tech-tag">AI</div>
+                                    </div>
+                                    <div class="project-actions">
+                                        <a href="https://github.com/iamkavy47/chatoxf" class="action-btn">GITHUB</a>
+                                        <a href="https://chatoxf.com" class="action-btn">LIVE PREVIEW</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Deck 2 -->
+                        <div class="project-card hoverable">
+                            <div class="deck-header">
+                                <div>PROJECT_02 // THINKUP'25</div>
+                                <div class="flex items-center gap-2"><div class="status-dot"></div>ACTIVE</div>
+                            </div>
+                            <div class="deck-body">
+                                <div class="scan-overlay"></div>
+                                <img src="/assets/projects/thinkup.png" class="project-img">
+                                <div class="deck-info">
+                                    <h3 class="project-title">Thinkup'25</h3>
+                                    <p class="project-desc">A vibrant pixel-art website for Thinkup'25, a national-level ideathon fostering innovation and creativity in a futuristic, collaborative campus.</p>
+                                    <div class="tech-tags">
+                                        <div class="tech-tag">HTML</div>
+                                        <div class="tech-tag">CSS</div>
+                                        <div class="tech-tag">JavaScript</div>
+                                        <div class="tech-tag">GSAP</div>
+                                    </div>
+                                    <div class="project-actions">
+                                        <a href="https://github.com/iamkavy47/ideathon" class="action-btn">GITHUB</a>
+                                        <a href="https://mufests.com" class="action-btn">LIVE PREVIEW</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Deck 3 -->
+                        <div class="project-card hoverable">
+                            <div class="deck-header">
+                                <div>PROJECT_03 // MAC OS CLONE</div>
+                                <div class="flex items-center gap-2"><div class="status-dot"></div>V3.0</div>
+                            </div>
+                            <div class="deck-body">
+                                <div class="scan-overlay"></div>
+                                <img src="/assets/projects/macos.png" class="project-img">
+                                <div class="deck-info">
+                                    <h3 class="project-title">Mac OS Clone</h3>
+                                    <p class="project-desc">Enterprise-grade design system focusing on accessibility, dark-mode optimization, and component modularity.</p>
+                                    <div class="tech-tags">
+                                        <div class="tech-tag">Nextjs</div>
+                                        <div class="tech-tag">React</div>
+                                        <div class="tech-tag">Tailwind</div>
+                                        <div class="tech-tag">GSAP</div>
+                                    </div>
+                                    <div class="project-actions">
+                                        <a href="https://github.com/iamkavy47/protfolio/" class="action-btn">GITHUB</a>
+                                        <a href="https://iamkavy47.vercel.app" class="action-btn">LIVE PREVIEW</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Archive (Cyberpunk Styled) -->
+                        <a href="works.html" class="project-card archive-card hoverable group flex flex-col">
+                            <div class="archive-grid"></div> <!-- Animated Grid Background -->
+                            <div class="window-header" style="background: transparent; border-bottom: 1px dashed var(--line-color); z-index: 10;">
+                                <div class="window-controls opacity-50"><span class="win-btn"></span><span class="win-btn"></span></div>
+                                <div class="window-title">DATABASE_ACCESS</div><div>[LOCKED]</div>
+                            </div>
+                            <div class="flex-grow flex items-center justify-center flex-col relative z-10">
+                                <div class="archive-core mb-6">
+                                    <div class="core-ring"></div>
+                                    <div class="core-inner">
+                                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-[var(--text-muted)] group-hover:text-[var(--accent)] transition-colors">
+                                            <path d="M21 8v13H3V8M1 3h22v5H1z" />
+                                            <path d="M10 12h4" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <h3 class="text-5xl font-bold glitch-text mb-2">ARCHIVE</h3>
+                                <p class="font-mono text-xs tracking-[0.3em] text-[var(--text-muted)] group-hover:text-[var(--text-main)] transition-colors">ACCESS_ALL_PROJECTS</p>
+                            </div>
+                            <div class="archive-scan"></div>
+                        </a>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. ABOUT ME (CYBER ID) -->
+            <section id="about" class="about-section">
+                <div class="id-card" id="tiltCard">
+                    <div class="id-header">
+                        <div class="id-logo">KAVY® INDUSTRIES</div>
+                        <div class="id-chip"></div>
+                    </div>
+                    
+                    <div class="id-body">
+                        <!-- Left: Photo & Scan -->
+                        <div class="id-photo-zone">
+                            <div class="id-scan-line"></div>
+                            <div class="p-2 bg-black/60 text-[var(--accent)] text-xs font-mono text-center">
+                                IDENTITY_CONFIRMED
+                            </div>
+                        </div>
+                        
+                        <!-- Right: Details -->
+                        <div class="id-details">
+                            <div>
+                                <div class="id-row">
+                                    <div class="id-label">OPERATIVE NAME</div>
+                                    <div class="id-value">KAVY PORWAL</div>
+                                </div>
+                                <div class="id-row">
+                                    <div class="id-label">ROLE DESIGNATION</div>
+                                    <div class="id-value" style="color: var(--accent)">CREATIVE FRONTEND DEV</div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="id-row">
+                                        <div class="id-label">EDUCATION</div>
+                                        <div class="id-value text-sm">B.TECH CSE (2024-PRESENT)</div>
+                                    </div>
+                                    <div class="id-row">
+                                        <div class="id-label">CLEARANCE</div>
+                                        <div class="id-value">LEVEL 5</div>
+                                    </div>
+                                </div>
+                                <div class="id-bio">
+                                    Specialized unit in Frontend Development and UI Engineering. <br>
+                                    Currently pursuing B.Tech in Computer Science. Building the future interface.
+                                </div>
+                            </div>
+                            <div class="barcode">KAVYPORWAL2024</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. ARSENAL -->
+            <section id="arsenal" class="arsenal-section">
+                <div class="px-4 md:px-10 mb-8 flex justify-between items-end">
+                    <div class="section-label font-mono text-[var(--accent)] text-xs border border-[var(--accent)] px-3 py-1 rounded-full">03 // SYSTEM ARSENAL</div>
+                </div>
+
+                <div class="stream-wrapper">
+                    <div class="tech-stream">
+                        <div class="tech-pill hoverable">React</div><div class="tech-pill hoverable">Next.js</div>
+                        <div class="tech-pill hoverable">GSAP</div><div class="tech-pill hoverable">Three.js</div>
+                        <div class="tech-pill hoverable">Python</div><div class="tech-pill hoverable">TensorFlow</div>
+                        <div class="tech-pill hoverable">Tailwind</div><div class="tech-pill hoverable">Vite</div>
+                        <div class="tech-pill hoverable">React</div><div class="tech-pill hoverable">Next.js</div>
+                    </div>
+                </div>
+                <div class="stream-wrapper">
+                    <div class="tech-stream reverse">
+                        <div class="tech-pill hoverable">Firebase</div><div class="tech-pill hoverable">WebGL</div>
+                        <div class="tech-pill hoverable">Zustand</div><div class="tech-pill hoverable">Docker</div>
+                        <div class="tech-pill hoverable">AWS</div><div class="tech-pill hoverable">Figma</div>
+                        <div class="tech-pill hoverable">Redux</div><div class="tech-pill hoverable">Auth0</div>
+                        <div class="tech-pill hoverable">Firebase</div><div class="tech-pill hoverable">WebGL</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. CONTACT -->
+            <section id="contact" class="contact-footer">
+                <div class="marquee-strip">
+                    <div class="marquee-content">
+                        <span class="marquee-item">Let's Build The Future • Open For Work • Let's Build The Future • Open For Work •</span>
+                        <span class="marquee-item">Let's Build The Future • Open For Work • Let's Build The Future • Open For Work •</span>
+                    </div>
+                </div>
+                <div class="min-h-[80vh] flex flex-col justify-center items-center px-4 text-center">
+                    <div class="font-mono text-[var(--accent)] mb-4 text-xs">05 // INITIATE PROTOCOL</div>
+                    <a href="mailto:iamkavy47@gmail.com" class="contact-big-text hoverable">LET'S<br>WORK</a>
+                    <div class="flex gap-8 mt-12 uppercase text-sm tracking-widest font-bold font-mono text-[var(--text-main)]">
+                        <a href="https://linkedin.com/in/iamkavy47" target="_blank" class="hover:text-[var(--accent)] transition-colors hoverable">LinkedIn</a>
+                        <a href="https://github.com/iamkavy47" target="_blank" class="hover:text-[var(--accent)] transition-colors hoverable">GitHub</a>
+                        <a href="https://twitter.com/iamkavy47" target="_blank" class="hover:text-[var(--accent)] transition-colors hoverable">Twitter</a>
+                    </div>
+                </div>
+            </section>
+
         </div>
-
-        <!-- Text Content -->
-        <h1 class="text-3xl md:text-4xl font-bold mb-3 text-slate-900">
-            Portfolio is <br />
-            <span class="text-yellow-500">Under Construction</span>
-        </h1>
-        
-        <div class="h-8 mb-10 flex items-center justify-center text-slate-500 text-sm md:text-base font-medium">
-            <span id="typing-text"></span><span class="cursor">&nbsp;</span>
-        </div>
-
-        <!-- Contact Links Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-            
-            <!-- WhatsApp -->
-            <a href="https://wa.me/919691672623?text=Hi%20Kavy,%20I%20saw%20your%20portfolio!" target="_blank" 
-               class="social-btn flex items-center justify-center gap-2 w-full py-3 px-4 bg-yellow-400 hover:bg-yellow-500 text-white rounded-xl font-semibold shadow-lg shadow-yellow-200 transition-all">
-                <i class="fab fa-whatsapp text-lg"></i>
-                <span>Chat on WhatsApp</span>
-            </a>
-
-            <!-- Email -->
-            <a href="mailto:kavyporwal75@gmail.com" 
-               class="social-btn flex items-center justify-center gap-2 w-full py-3 px-4 bg-white border border-slate-200 hover:border-slate-300 text-slate-700 hover:text-slate-900 rounded-xl font-medium transition-all">
-                <i class="far fa-envelope text-lg text-slate-400 group-hover:text-yellow-500"></i>
-                <span>Email</span>
-            </a>
-
-        </div>
-
-        <!-- Old Portfolio Link -->
-        <div class="mb-10">
-            <a href="https://iamkavy47.vercel.app" target="_blank" 
-               class="social-btn inline-flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-medium text-slate-500 bg-slate-50 border border-slate-200 rounded-full hover:bg-yellow-50 hover:text-yellow-600 hover:border-yellow-200 transition-all group">
-                <i class="fas fa-history text-slate-400 group-hover:text-yellow-500 transition-colors"></i>
-                <span>Visit Old Portfolio</span>
-            </a>
-        </div>
-
-        <!-- Social Icons Row -->
-        <div class="flex justify-center gap-5">
-            <!-- GitHub -->
-            <a href="https://github.com/iamkavy47" target="_blank" title="GitHub"
-               class="social-btn w-12 h-12 flex items-center justify-center rounded-full bg-slate-50 border border-slate-200 text-slate-600 hover:bg-slate-100 hover:text-yellow-600 hover:border-yellow-400 transition-all">
-                <i class="fab fa-github text-xl"></i>
-            </a>
-
-            <!-- LinkedIn -->
-            <a href="https://linkedin.com/in/iamkavy47" target="_blank" title="LinkedIn"
-               class="social-btn w-12 h-12 flex items-center justify-center rounded-full bg-slate-50 border border-slate-200 text-slate-600 hover:bg-slate-100 hover:text-yellow-600 hover:border-yellow-400 transition-all">
-                <i class="fab fa-linkedin-in text-xl"></i>
-            </a>
-
-            <!-- Instagram -->
-            <a href="https://instagram.com/iamkavy75" target="_blank" title="Instagram"
-               class="social-btn w-12 h-12 flex items-center justify-center rounded-full bg-slate-50 border border-slate-200 text-slate-600 hover:bg-slate-100 hover:text-yellow-600 hover:border-yellow-400 transition-all">
-                <i class="fab fa-instagram text-xl"></i>
-            </a>
-        </div>
-
-        <div class="mt-10 text-xs text-slate-400">
-            &copy; 2024 Kavy Porwal. Creating something amazing.
-        </div>
-    </main>
+    </div>
 
     <script>
-        // Typing Effect
-        const textToType = "Something awesome is being built.";
-        const typingElement = document.getElementById('typing-text');
-        let charIndex = 0;
+        // --- CONFIG ---
+        gsap.registerPlugin(ScrollTrigger);
 
-        function type() {
-            if (charIndex < textToType.length) {
-                typingElement.textContent += textToType.charAt(charIndex);
-                charIndex++;
-                setTimeout(type, 100);
-            }
-        }
+        // --- LENIS ---
+        const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smooth: true });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+
+        // Smooth Scroll for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return; // Ignore empty hash
+                const target = document.querySelector(targetId);
+                if (target) {
+                    lenis.scrollTo(target);
+                }
+            });
+        });
+
+        // --- THEME TOGGLE ---
+        const themeBtn = document.getElementById('themeBtn');
+        if(localStorage.getItem('theme') === 'light') { document.body.classList.add('light-mode'); }
+        themeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+        });
+
+        // --- PRELOADER ---
+        const percentEl = document.querySelector('.loader-percent');
+        const barEl = document.querySelector('.loader-bar');
+        const scrambleEl = document.querySelector('#scramble');
+        const preloader = document.querySelector('.preloader');
+        const techWords = ["BOOTING", "LOADING SHADERS", "OPTIMIZING", "READY"];
         
-        // Start typing after a brief delay
-        setTimeout(type, 800);
+        let progress = 0;
+        const updateLoader = () => {
+            let increment = Math.floor(Math.random() * 5) + 1;
+            progress = Math.min(progress + increment, 100);
+            percentEl.textContent = progress + "%"; barEl.style.width = progress + "%";
+            if(progress % 10 === 0) scrambleEl.textContent = techWords[Math.floor(progress / 30)] || "READY";
+            if (progress < 100) setTimeout(updateLoader, 30);
+            else onLoaderComplete();
+        };
+        updateLoader();
 
-
-        // Particle Background Animation
-        const canvas = document.getElementById('bgCanvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 0.3; // Slower, calmer movement
-                this.vy = (Math.random() - 0.5) * 0.3;
-                this.size = Math.random() * 3 + 1;
-                
-                // Darker Yellow and Light Slate for visibility on White BG
-                this.isYellow = Math.random() > 0.7; // 30% Yellow, 70% Gray
-                this.color = this.isYellow ? 'rgba(234, 179, 8, ' : 'rgba(203, 213, 225, '; 
-            }
-
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-
-                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-            }
-
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = this.color + '0.6)';
-                ctx.fill();
-            }
+        function onLoaderComplete() {
+            const tl = gsap.timeline();
+            tl.to(percentEl, { y: -50, opacity: 0, duration: 0.4, ease: "power2.in" })
+              .to(".loader-bar-wrapper", { width: 0, duration: 0.4 }, "<")
+              .to(preloader, { yPercent: -100, duration: 1, ease: "expo.inOut", onComplete: initSiteAnimations });
         }
 
-        // Create particles
-        const particleCount = Math.min(window.innerWidth / 15, 80); // Slightly fewer particles for cleaner look
-        for (let i = 0; i < particleCount; i++) {
-            particles.push(new Particle());
-        }
+        // --- ANIMATIONS ---
+        function initSiteAnimations() {
+            // 1. Hero
+            const headings = document.querySelectorAll('.split-heading');
+            headings.forEach(h => {
+                const text = new SplitType(h, { types: 'chars' });
+                gsap.to(h, { opacity: 1, duration: 0 });
+                gsap.fromTo(text.chars, 
+                    { y: 100, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.02, duration: 1.2, ease: "power4.out", delay: 0.1 }
+                );
+            });
+            gsap.fromTo(".hero-line-deco", { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 1.5, ease: "expo.out", delay: 0.6 });
+            gsap.fromTo(".hero-meta", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1, delay: 1, ease: "power2.out" });
 
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // 2. Works Split
+            const trackWrapper = document.querySelector('.gallery-track-wrapper');
+            const track = document.querySelector('.gallery-track');
             
-            particles.forEach(p => {
-                p.update();
-                p.draw();
+            // Responsive Scroll Distance
+            const getScrollAmount = () => -(track.scrollWidth - window.innerWidth);
+            
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#work-section", start: "top top", end: "+=400%", pin: true, scrub: 1,
+                }
             });
 
-            // Draw connections
-            ctx.lineWidth = 0.5;
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
+            tl.to(".curtain-top", { yPercent: -100, duration: 1, ease: "power2.inOut" }, "open")
+              .to(".curtain-bottom", { yPercent: 100, duration: 1, ease: "power2.inOut" }, "open")
+              .fromTo(track, { x: 0 }, { x: getScrollAmount, duration: 5, ease: "none" }, "scroll")
+              .to(".curtain-top", { yPercent: 0, duration: 1, ease: "power2.inOut" }, "close")
+              .to(".curtain-bottom", { yPercent: 0, duration: 1, ease: "power2.inOut" }, "close");
 
-                    if (distance < 120) {
-                        ctx.beginPath();
-                        // Gray lines for subtle connections
-                        ctx.strokeStyle = `rgba(203, 213, 225, ${0.4 - distance/1200})`; 
-                        // If both are yellow, make connection yellow
-                        if(particles[i].isYellow && particles[j].isYellow) {
-                             ctx.strokeStyle = `rgba(250, 204, 21, ${0.4 - distance/1200})`;
-                        }
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
+            // 3. About ID Card Tilt
+            const card = document.getElementById('tiltCard');
+            if(card) {
+                document.addEventListener('mousemove', (e) => {
+                    const x = (window.innerWidth / 2 - e.clientX) / 30;
+                    const y = (window.innerHeight / 2 - e.clientY) / 30;
+                    
+                    // Only tilt if section is visible
+                    const rect = card.getBoundingClientRect();
+                    if(rect.top < window.innerHeight && rect.bottom > 0) {
+                         card.style.transform = `rotateY(${-x}deg) rotateX(${y}deg)`;
                     }
-                }
+                });
             }
 
-            requestAnimationFrame(animate);
+            // 4. Contact
+             const contactText = new SplitType('.contact-big-text', { types: 'chars' });
+            gsap.from(contactText.chars, {
+                yPercent: 100, opacity: 0, stagger: 0.05,
+                scrollTrigger: { trigger: ".contact-big-text", start: "top 80%" }
+            });
         }
 
-        animate();
+        // --- CURSOR ---
+        const cursor = document.querySelector('.cursor-dot');
+        const follower = document.querySelector('.cursor-follower');
+        let mouseX = 0, mouseY = 0;
+        window.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+        gsap.ticker.add(() => {
+            gsap.set(cursor, { x: mouseX - 4, y: mouseY - 4 });
+            gsap.to(follower, { x: mouseX - 20, y: mouseY - 20, duration: 0.15 });
+        });
+
+        document.querySelectorAll('.hoverable').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                gsap.to(follower, { width: 80, height: 80, borderColor: 'var(--accent)', mixBlendMode: 'difference' });
+            });
+            el.addEventListener('mouseleave', () => {
+                gsap.to(follower, { width: 40, height: 40, borderColor: 'var(--text-muted)', mixBlendMode: 'normal' });
+            });
+        });
+
     </script>
 </body>
 </html>
