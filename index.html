@@ -1,32 +1,54 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kavy Porwal | Creative Engineer</title>
     
-    <!-- Font: Clash Display & Satoshi -->
+    <title>Kavy Porwal | Creative Frontend Engineer & UI Designer</title>
+    <meta name="description" content="Portfolio of Kavy Porwal, a Creative Engineer and Frontend Developer specializing in GSAP animations, React, Next.js, and immersive UI/UX design.">
+    <meta name="keywords" content="Kavy Porwal, Frontend Developer, Creative Engineer, Web Developer Mandsaur, React Developer, GSAP Portfolio, 3D Web Design">
+    <meta name="author" content="Kavy Porwal">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://kavyporwal.com"> <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kavyporwal.com">
+    <meta property="og:title" content="Kavy Porwal | Creative Engineer">
+    <meta property="og:description" content="Architecting digital chaos into precision. View the interactive portfolio of Kavy Porwal.">
+    <meta property="og:image" content="https://kavyporwal.com/assets/og-image.jpg"> 
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Kavy Porwal",
+      "url": "https://kavyporwal.com",
+      "jobTitle": "Creative Frontend Engineer",
+      "alumniOf": "Mandsaur University",
+      "sameAs": [
+        "https://linkedin.com/in/iamkavy47",
+        "https://github.com/iamkavy47",
+        "https://twitter.com/iamkavy47"
+      ]
+    }
+    </script>
+
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
-    <!-- Font: Barcode & Mono -->
     <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39+Text&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- GSAP, ScrollTrigger, Lenis, SplitType -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script src="https://unpkg.com/split-type"></script>
 
     <style>
-        /* --- CSS VARIABLES & THEMING --- */
+        /* [KEEP YOUR EXISTING CSS HERE - NO CHANGES NEEDED IN STYLES FOR SEO] */
+        /* Paste the exact content of your <style> tag from your original code here */
         :root {
-            /* Dark Mode (Default) */
             --bg-color: #050505;
             --text-main: #EDEDED;
             --text-muted: #888888;
-            --accent: #DBFF00; /* Acid Green */
+            --accent: #DBFF00;
             --accent-glow: rgba(219, 255, 0, 0.2);
             --line-color: rgba(255, 255, 255, 0.12);
             --window-bg: #0a0a0a;
@@ -39,7 +61,6 @@
         }
 
         body.light-mode {
-            /* Light Mode (Industrial Yellow) */
             --bg-color: #EBEBEB;
             --text-main: #111111;
             --text-muted: #555555;
@@ -63,13 +84,12 @@
             width: 100%;
             overflow-x: hidden;
             transition: background-color 0.5s ease, color 0.5s ease;
-            cursor: none; /* Custom cursor */
+            cursor: none;
         }
 
         h1, h2, h3, .display-font { font-family: 'Clash Display', sans-serif; }
         .font-mono { font-family: var(--font-mono); }
 
-        /* --- NAVBAR & THEME TOGGLE --- */
         .navbar {
             position: fixed; top: 0; left: 0; width: 100%;
             padding: 1.5rem 5%; display: flex; justify-content: space-between;
@@ -106,7 +126,6 @@
         }
         .resume-btn:hover { background: transparent; color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); }
 
-        /* --- PRELOADER --- */
         .preloader {
             position: fixed; inset: 0; background: #000; z-index: 9999;
             display: flex; flex-direction: column; justify-content: space-between;
@@ -116,14 +135,12 @@
         .loader-bar { width: 0%; height: 100%; background: var(--accent); }
         .loader-percent { font-size: 15vw; font-weight: 800; line-height: 0.8; align-self: flex-end; }
 
-        /* --- HERO --- */
         .hero-text-line { overflow: hidden; display: flex; line-height: 0.85; }
         .hero-title { font-size: clamp(3rem, 13vw, 12rem); font-weight: 700; text-transform: uppercase; line-height: 0.9; }
         .outline-text { -webkit-text-stroke: 1px var(--text-muted); color: transparent; transition: all 0.3s; }
         .outline-text:hover { color: var(--accent); -webkit-text-stroke: 0px; }
         .split-heading, .hero-line-deco, .hero-meta { opacity: 0; }
 
-        /* --- WORKS SECTION --- */
         .works-wrapper { position: relative; width: 100%; height: 100vh; overflow: hidden; }
         .curtain {
             position: absolute; left: 0; width: 100%; height: 50%;
@@ -147,7 +164,6 @@
         }
         .gallery-track { display: flex; flex-wrap: nowrap; padding: 0 5vw; gap: 5vw; }
 
-        /* --- PROJECT CARD --- */
         .project-card {
             width: 90vw; height: 70vh; flex-shrink: 0;
             background: var(--card-bg); border: 1px solid var(--line-color);
@@ -221,7 +237,6 @@
             text-transform: uppercase; border-radius: 2px;
         }
 
-        /* --- ARCHIVE CARD --- */
         .archive-card {
             background: var(--card-bg); overflow: hidden; text-decoration: none; cursor: pointer;
         }
@@ -274,7 +289,6 @@
         .archive-card:hover .archive-scan { opacity: 0.5; }
         @keyframes scanDown { 0% { top: -10%; } 100% { top: 110%; } }
 
-        /* --- ABOUT ME --- */
         .about-section {
             position: relative; padding: 15vh 5%; border-top: 1px solid var(--line-color);
             background: var(--bg-color); display: flex; justify-content: center; align-items: center; perspective: 1000px;
@@ -321,7 +335,6 @@
         .id-bio { font-size: 0.9rem; line-height: 1.6; color: var(--text-muted); margin-top: 1rem; border-top: 1px dashed var(--line-color); padding-top: 1rem; font-family: var(--font-mono); }
         .barcode { font-family: 'Libre Barcode 39 Text', cursive; font-size: 2.5rem; color: var(--text-muted); opacity: 0.8; margin-top: auto; }
 
-        /* --- ARSENAL --- */
         .arsenal-section { padding: 10vh 0; background: var(--bg-color); border-top: 1px solid var(--line-color); overflow: hidden; }
         .stream-wrapper { margin-bottom: 2rem; width: 100%; overflow: hidden; display: flex; mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
         .tech-stream { display: flex; gap: 2rem; animation: streamScroll 30s linear infinite; padding-left: 2rem; min-width: max-content; }
@@ -335,7 +348,6 @@
         }
         .tech-pill:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); transform: scale(1.05); }
 
-        /* --- FOOTER --- */
         .contact-footer { background: var(--bg-color); padding-top: 10vh; position: relative; }
         .contact-big-text {
             font-size: 12vw; line-height: 0.8; font-weight: 800; text-transform: uppercase;
@@ -350,7 +362,6 @@
         .marquee-content { display: flex; animation: streamScroll 20s linear infinite; min-width: max-content; }
         .marquee-item { font-size: clamp(2rem, 6vw, 6rem); font-weight: 800; uppercase; color: var(--line-color); margin-right: 4rem; white-space: nowrap; }
 
-        /* --- UTILS --- */
         .section-label { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); margin-bottom: 1rem; display: inline-block; border: 1px solid var(--accent); padding: 0.2rem 0.6rem; border-radius: 100px; }
         .cursor-dot { width: 8px; height: 8px; background: var(--accent); position: fixed; border-radius: 50%; pointer-events: none; z-index: 10000; }
         .cursor-follower { width: 40px; height: 40px; border: 1px solid var(--text-muted); position: fixed; border-radius: 50%; pointer-events: none; z-index: 9998; transition: transform 0.15s, width 0.3s, height 0.3s; opacity: 0.5; }
@@ -363,9 +374,8 @@
     <div class="cursor-dot"></div>
     <div class="cursor-follower"></div>
 
-    <!-- NAVBAR -->
     <nav class="navbar">
-        <a href="#hero" class="font-bold text-xl tracking-tighter hoverable nav-link-smooth" style="color: var(--text-main); text-decoration: none;">KAVY®</a>
+        <a href="#hero" class="font-bold text-xl tracking-tighter hoverable nav-link-smooth" style="color: var(--text-main); text-decoration: none;" aria-label="Go to Homepage">KAVY®</a>
         <div class="flex items-center">
             <div class="nav-links-container">
                 <a href="#work-section" class="nav-link hoverable">Work</a>
@@ -374,19 +384,16 @@
                 <a href="#contact" class="nav-link hoverable">Contact</a>
             </div>
             
-            <!-- RESUME BUTTON -->
-            <a href="assets/resume.pdf" download="Kavy_Porwal_Resume" class="resume-btn hoverable">
+            <a href="assets/resume.pdf" download="Kavy_Porwal_Resume" class="resume-btn hoverable" aria-label="Download Resume">
                 Resume
             </a>
 
-            <!-- THEME SWITCHER -->
-            <button class="theme-toggle hoverable" id="themeBtn">
+            <button class="theme-toggle hoverable" id="themeBtn" aria-label="Toggle Theme">
                 <span class="light-text">LIGHT</span> / <span class="dark-text">DARK</span>
             </button>
         </div>
     </nav>
 
-    <!-- PRELOADER -->
     <div class="preloader">
         <div class="loader-text-scramble" id="scramble">INITIALIZING...</div>
         <div class="w-full">
@@ -401,7 +408,6 @@
     <div id="smooth-wrapper">
         <div id="smooth-content">
 
-            <!-- 1. HERO -->
             <section id="hero" class="min-h-screen flex flex-col justify-center md:justify-end pb-20 px-4 md:px-10 pt-32 relative overflow-hidden">
                 <div class="relative z-10">
                     <div class="hero-text-line"><h1 class="hero-title split-heading">Creative</h1></div>
@@ -426,7 +432,6 @@
                 </div>
             </section>
 
-            <!-- 2. WORKS (CYBER DECK) -->
             <section id="work-section" class="works-wrapper">
                 <div class="curtain curtain-top"><h2 class="split-work-text">WORKS</h2></div>
                 <div class="curtain curtain-bottom"><h2 class="split-work-text">WORKS</h2></div>
@@ -434,7 +439,6 @@
                 <div class="gallery-track-wrapper">
                     <div class="gallery-track">
                         
-                        <!-- Deck 1 -->
                         <div class="project-card hoverable">
                             <div class="deck-header">
                                 <div>PROJECT_01 // CHATOXF</div>
@@ -442,7 +446,7 @@
                             </div>
                             <div class="deck-body">
                                 <div class="scan-overlay"></div>
-                                <img src="/assets/projects/chatoxf.png" class="project-img">
+                                <img src="/assets/projects/chatoxf.png" class="project-img" alt="ChatOXF AI Chat Application Interface">
                                 <div class="deck-info">
                                     <h3 class="project-title">ChatOXF</h3>
                                     <p class="project-desc">A chat app built with HTML, CSS, JS, and Convex with GSAP animations. Features an AI assistant similar to WhatsApp's Meta AI.</p>
@@ -455,14 +459,13 @@
                                         <div class="tech-tag">AI</div>
                                     </div>
                                     <div class="project-actions">
-                                        <a href="https://github.com/iamkavy47/chatoxf" class="action-btn">GITHUB</a>
-                                        <a href="https://chatoxf.com" class="action-btn">LIVE PREVIEW</a>
+                                        <a href="https://github.com/iamkavy47/chatoxf" class="action-btn" aria-label="View ChatOXF Code">GITHUB</a>
+                                        <a href="https://chatoxf.com" class="action-btn" aria-label="View ChatOXF Live">LIVE PREVIEW</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Deck 2 -->
                         <div class="project-card hoverable">
                             <div class="deck-header">
                                 <div>PROJECT_02 // THINKUP'25</div>
@@ -470,10 +473,10 @@
                             </div>
                             <div class="deck-body">
                                 <div class="scan-overlay"></div>
-                                <img src="/assets/projects/thinkup.png" class="project-img">
+                                <img src="/assets/projects/thinkup.png" class="project-img" alt="Thinkup'25 Ideathon Website">
                                 <div class="deck-info">
                                     <h3 class="project-title">Thinkup'25</h3>
-                                    <p class="project-desc">A vibrant pixel-art website for Thinkup'25, a national-level ideathon fostering innovation and creativity in a futuristic, collaborative campus.</p>
+                                    <p class="project-desc">A vibrant pixel-art website for Thinkup'25, a national-level ideathon fostering innovation and creativity.</p>
                                     <div class="tech-tags">
                                         <div class="tech-tag">HTML</div>
                                         <div class="tech-tag">CSS</div>
@@ -481,14 +484,13 @@
                                         <div class="tech-tag">GSAP</div>
                                     </div>
                                     <div class="project-actions">
-                                        <a href="https://github.com/iamkavy47/ideathon" class="action-btn">GITHUB</a>
-                                        <a href="https://mufests.com" class="action-btn">LIVE PREVIEW</a>
+                                        <a href="https://github.com/iamkavy47/ideathon" class="action-btn" aria-label="View ThinkUp Code">GITHUB</a>
+                                        <a href="https://mufests.com" class="action-btn" aria-label="View ThinkUp Live">LIVE PREVIEW</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Deck 3 -->
                         <div class="project-card hoverable">
                             <div class="deck-header">
                                 <div>PROJECT_03 // MAC OS CLONE</div>
@@ -496,7 +498,7 @@
                             </div>
                             <div class="deck-body">
                                 <div class="scan-overlay"></div>
-                                <img src="/assets/projects/macos.png" class="project-img">
+                                <img src="/assets/projects/macos.png" class="project-img" alt="Mac OS Web Clone Interface">
                                 <div class="deck-info">
                                     <h3 class="project-title">Mac OS Clone</h3>
                                     <p class="project-desc">Enterprise-grade design system focusing on accessibility, dark-mode optimization, and component modularity.</p>
@@ -507,16 +509,15 @@
                                         <div class="tech-tag">GSAP</div>
                                     </div>
                                     <div class="project-actions">
-                                        <a href="https://github.com/iamkavy47/protfolio/" class="action-btn">GITHUB</a>
-                                        <a href="https://iamkavy47.vercel.app" class="action-btn">LIVE PREVIEW</a>
+                                        <a href="https://github.com/iamkavy47/protfolio/" class="action-btn" aria-label="View Mac Clone Code">GITHUB</a>
+                                        <a href="https://iamkavy47.vercel.app" class="action-btn" aria-label="View Mac Clone Live">LIVE PREVIEW</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Archive (Cyberpunk Styled) -->
-                        <a href="works.html" class="project-card archive-card hoverable group flex flex-col">
-                            <div class="archive-grid"></div> <!-- Animated Grid Background -->
+                        <a href="works.html" class="project-card archive-card hoverable group flex flex-col" aria-label="View All Projects">
+                            <div class="archive-grid"></div> 
                             <div class="window-header" style="background: transparent; border-bottom: 1px dashed var(--line-color); z-index: 10;">
                                 <div class="window-controls opacity-50"><span class="win-btn"></span><span class="win-btn"></span></div>
                                 <div class="window-title">DATABASE_ACCESS</div><div>[LOCKED]</div>
@@ -541,7 +542,6 @@
                 </div>
             </section>
 
-            <!-- 3. ABOUT ME (CYBER ID) -->
             <section id="about" class="about-section">
                 <div class="id-card" id="tiltCard">
                     <div class="id-header">
@@ -550,15 +550,13 @@
                     </div>
                     
                     <div class="id-body">
-                        <!-- Left: Photo & Scan -->
-                        <div class="id-photo-zone">
+                        <div class="id-photo-zone" aria-label="Photo of Kavy Porwal">
                             <div class="id-scan-line"></div>
                             <div class="p-2 bg-black/60 text-[var(--accent)] text-xs font-mono text-center">
                                 IDENTITY_CONFIRMED
                             </div>
                         </div>
                         
-                        <!-- Right: Details -->
                         <div class="id-details">
                             <div>
                                 <div class="id-row">
@@ -590,7 +588,6 @@
                 </div>
             </section>
 
-            <!-- 4. ARSENAL -->
             <section id="arsenal" class="arsenal-section">
                 <div class="px-4 md:px-10 mb-8 flex justify-between items-end">
                     <div class="section-label font-mono text-[var(--accent)] text-xs border border-[var(--accent)] px-3 py-1 rounded-full">03 // SYSTEM ARSENAL</div>
@@ -616,7 +613,6 @@
                 </div>
             </section>
 
-            <!-- 5. CONTACT -->
             <section id="contact" class="contact-footer">
                 <div class="marquee-strip">
                     <div class="marquee-content">
@@ -626,11 +622,11 @@
                 </div>
                 <div class="min-h-[80vh] flex flex-col justify-center items-center px-4 text-center">
                     <div class="font-mono text-[var(--accent)] mb-4 text-xs">05 // INITIATE PROTOCOL</div>
-                    <a href="mailto:kavyporwal75@gmail.com" class="contact-big-text hoverable">LET'S<br>WORK</a>
+                    <a href="mailto:kavyporwal75@gmail.com" class="contact-big-text hoverable" aria-label="Email Me">LET'S<br>WORK</a>
                     <div class="flex gap-8 mt-12 uppercase text-sm tracking-widest font-bold font-mono text-[var(--text-main)]">
-                        <a href="https://linkedin.com/in/iamkavy47" target="_blank" class="hover:text-[var(--accent)] transition-colors hoverable">LinkedIn</a>
-                        <a href="https://github.com/iamkavy47" target="_blank" class="hover:text-[var(--accent)] transition-colors hoverable">GitHub</a>
-                        <a href="https://twitter.com/iamkavy47" target="_blank" class="hover:text-[var(--accent)] transition-colors hoverable">Twitter</a>
+                        <a href="https://linkedin.com/in/iamkavy47" target="_blank" class="hover:text-[var(--accent)] transition-colors hoverable" aria-label="LinkedIn Profile">LinkedIn</a>
+                        <a href="https://github.com/iamkavy47" target="_blank" class="hover:text-[var(--accent)] transition-colors hoverable" aria-label="GitHub Profile">GitHub</a>
+                        <a href="https://twitter.com/iamkavy47" target="_blank" class="hover:text-[var(--accent)] transition-colors hoverable" aria-label="Twitter Profile">Twitter</a>
                     </div>
                 </div>
             </section>
