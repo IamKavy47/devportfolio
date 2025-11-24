@@ -3,17 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kavy Porwal | Project Archive</title>
     
-    <!-- Font: Clash Display & Satoshi -->
+    <title>Project Archive | Kavy Porwal - Creative Engineer</title>
+    <meta name="description" content="A curated archive of creative engineering projects by Kavy Porwal. Featuring ChatOXF, Thinkup'25, and MacOS Web Clones built with React, GSAP, and WebGL.">
+    <meta name="keywords" content="Kavy Porwal Projects, Frontend Developer Portfolio, WebGL Experiments, React Projects, GSAP Animations, Creative Coding Archive">
+    <meta name="author" content="Kavy Porwal">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://kavyporwal.dev/works.html">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kavyporwal.dev/works.html">
+    <meta property="og:title" content="Kavy Porwal | Project Archive">
+    <meta property="og:description" content="Access the digital arsenal. A collection of high-performance frontend projects and experiments.">
+    <meta property="og:image" content="https://kavyporwal.dev/assets/og-image.jpg">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://kavyporwal.dev/works.html">
+    <meta name="twitter:title" content="Kavy Porwal | Project Archive">
+    <meta name="twitter:description" content="Access the digital arsenal. A collection of high-performance frontend projects and experiments.">
+    <meta name="twitter:image" content="https://kavyporwal.dev/assets/og-image.jpg">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "headline": "Kavy Porwal Project Archive",
+      "description": "A collection of software engineering and creative frontend projects.",
+      "author": {
+        "@type": "Person",
+        "name": "Kavy Porwal"
+      },
+      "mainEntity": {
+        "@type": "ItemList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ChatOXF" },
+          { "@type": "ListItem", "position": 2, "name": "Thinkup'25" },
+          { "@type": "ListItem", "position": 3, "name": "MacOS Clone" },
+          { "@type": "ListItem", "position": 4, "name": "MU CodeStorm" }
+        ]
+      }
+    }
+    </script>
+    
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
-    <!-- Font: JetBrains Mono -->
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- GSAP & Lenis -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
@@ -366,14 +402,13 @@
     <div class="cursor-dot"></div>
     <div class="cursor-follower"></div>
 
-    <!-- PROJECT MODAL -->
-    <div class="project-modal">
+    <div class="project-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <div class="modal-content">
             <div class="modal-scanlines"></div>
-            <button class="modal-close hoverable">CLOSE_MODAL [ESC]</button>
+            <button class="modal-close hoverable" aria-label="Close Modal">CLOSE_MODAL [ESC]</button>
             
             <div class="modal-img-wrapper">
-                <img src="" class="modal-img" id="modal-image">
+                <img src="" class="modal-img" id="modal-image" alt="Project Screenshot">
             </div>
             
             <div class="modal-details">
@@ -385,8 +420,8 @@
                     </p>
                 </div>
                 <div class="modal-actions">
-                    <a href="#" class="action-btn hoverable" id="btn-github" target="_blank">GITHUB_REPO</a>
-                    <a href="#" class="action-btn hoverable" id="btn-live" target="_blank">LAUNCH_SITE</a>
+                    <a href="#" class="action-btn hoverable" id="btn-github" target="_blank" rel="noopener noreferrer">GITHUB_REPO</a>
+                    <a href="#" class="action-btn hoverable" id="btn-live" target="_blank" rel="noopener noreferrer">LAUNCH_SITE</a>
                 </div>
             </div>
             
@@ -397,7 +432,6 @@
         </div>
     </div>
 
-    <!-- FLOATING PREVIEW (UPDATED STYLE) -->
     <div class="preview-container">
         <div class="preview-header">
             <span>PREVIEW_MODE</span>
@@ -405,21 +439,17 @@
         </div>
         <div class="preview-scanlines"></div>
         
-        <img src="/assets/projects/chatoxf.png" class="preview-img" id="img-omnix">
-        <img src="/assets/projects/thinkup.png" class="preview-img" id="img-velocita">
-        <img src="/assets/projects/macos.png" class="preview-img" id="img-echo">
-        <img src="/assets/projects/codestorm.png" class="preview-img" id="img-nebula">
-        <img src="https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=500" class="preview-img" id="img-vertex">
-        <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=500" class="preview-img" id="img-aether">
-        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=500" class="preview-img" id="img-cipher">
-        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=500" class="preview-img" id="img-glitch">
+        <img src="/assets/projects/chatoxf.png" class="preview-img" id="img-omnix" alt="ChatOXF Preview">
+        <img src="/assets/projects/thinkup.png" class="preview-img" id="img-velocita" alt="Thinkup'25 Preview">
+        <img src="/assets/projects/macos.png" class="preview-img" id="img-echo" alt="Mac OS Clone Preview">
+        <img src="/assets/projects/codestorm.png" class="preview-img" id="img-nebula" alt="CodeStorm Preview">
     </div>
 
     <nav class="navbar">
-        <a href="index.html" class="back-link hoverable">
+        <a href="index.html" class="back-link hoverable" aria-label="Return to Homepage">
             <span>←</span> BACK TO BASE
         </a>
-        <button class="theme-toggle hoverable" id="themeBtn">
+        <button class="theme-toggle hoverable" id="themeBtn" aria-label="Toggle Theme">
             <span class="light-text">LIGHT</span> / <span class="dark-text">DARK</span>
         </button>
     </nav>
@@ -435,35 +465,21 @@
                 </div>
             </header>
 
-            <div class="project-list">
-                <!-- List Items -->
-                <div class="project-row hoverable" data-id="omnix" data-img="img-omnix">
-                    <div class="row-title">ChatOXF</div><div class="row-cats">Chatting Platform</div><div class="row-year">2025</div>
+            <div class="project-list" role="list">
+                <div class="project-row hoverable" data-id="chatoxf" data-img="img-omnix" role="listitem" tabindex="0">
+                    <h3 class="row-title">ChatOXF</h3><div class="row-cats">Chatting Platform</div><div class="row-year">2025</div>
                 </div>
-                <div class="project-row hoverable" data-id="velocita" data-img="img-velocita">
-                    <div class="row-title">Thinkup'25</div><div class="row-cats">Ideathon Website</div><div class="row-year">2025</div>
+                <div class="project-row hoverable" data-id="thinkup" data-img="img-velocita" role="listitem" tabindex="0">
+                    <h3 class="row-title">Thinkup'25</h3><div class="row-cats">Ideathon Website</div><div class="row-year">2025</div>
                 </div>
-                <div class="project-row hoverable" data-id="echo" data-img="img-echo">
-                    <div class="row-title">MacOS Clone</div><div class="row-cats">MacOS Web Clone</div><div class="row-year">2025</div>
+                <div class="project-row hoverable" data-id="macos" data-img="img-echo" role="listitem" tabindex="0">
+                    <h3 class="row-title">MacOS Clone</h3><div class="row-cats">MacOS Web Clone</div><div class="row-year">2025</div>
                 </div>
-                <div class="project-row hoverable" data-id="nebula" data-img="img-nebula">
-                    <div class="row-title">MU CodeStorm</div><div class="row-cats">Hackathon Website</div><div class="row-year">2025</div>
+                <div class="project-row hoverable" data-id="nebula" data-img="img-nebula" role="listitem" tabindex="0">
+                    <h3 class="row-title">MU CodeStorm</h3><div class="row-cats">Hackathon Website</div><div class="row-year">2025</div>
                 </div>
-                <!-- <div class="project-row hoverable" data-id="vertex" data-img="img-vertex">
-                    <div class="row-title">Vertex Logic</div><div class="row-cats">Backend / Python</div><div class="row-year">2022</div>
-                </div>
-                <div class="project-row hoverable" data-id="aether" data-img="img-aether">
-                    <div class="row-title">Aether Labs</div><div class="row-cats">Web3 / Solidity</div><div class="row-year">2022</div>
-                </div>
-                <div class="project-row hoverable" data-id="cipher" data-img="img-cipher">
-                    <div class="row-title">Cipher Punk</div><div class="row-cats">Generative Art</div><div class="row-year">2021</div>
-                </div>
-                <div class="project-row hoverable" data-id="glitch" data-img="img-glitch">
-                    <div class="row-title">Glitch Mode</div><div class="row-cats">Experiment</div><div class="row-year">2020</div>
-                </div> -->
             </div>
 
-            <!-- CONTACT SECTION (FROM MAIN) -->
             <section id="contact" class="contact-footer">
                 <div class="marquee-strip">
                     <div class="marquee-content">
@@ -473,11 +489,11 @@
                 </div>
                 <div class="min-h-[80vh] flex flex-col justify-center items-center px-4 text-center">
                     <div class="font-mono text-[var(--accent)] mb-4 text-xs">05 // INITIATE PROTOCOL</div>
-                    <a href="mailto:kavyporwal75@gmail.com" class="contact-big-text hoverable">LET'S<br>WORK</a>
+                    <a href="mailto:kavyporwal75@gmail.com" class="contact-big-text hoverable" aria-label="Email Me">LET'S<br>WORK</a>
                     <div class="flex gap-8 mt-12 uppercase text-sm tracking-widest font-bold font-mono text-[var(--text-main)]">
-                        <a href="#" class="hover:text-[var(--accent)] transition-colors hoverable">LinkedIn</a>
-                        <a href="#" class="hover:text-[var(--accent)] transition-colors hoverable">GitHub</a>
-                        <a href="#" class="hover:text-[var(--accent)] transition-colors hoverable">Twitter</a>
+                        <a href="https://linkedin.com/in/iamkavy47" target="_blank" class="hover:text-[var(--accent)] transition-colors hoverable" rel="noopener noreferrer">LinkedIn</a>
+                        <a href="https://github.com/iamkavy47" target="_blank" class="hover:text-[var(--accent)] transition-colors hoverable" rel="noopener noreferrer">GitHub</a>
+                        <a href="https://twitter.com/iamkavy47" target="_blank" class="hover:text-[var(--accent)] transition-colors hoverable" rel="noopener noreferrer">Twitter</a>
                     </div>
                 </div>
                 <div class="footer-bottom">
@@ -518,35 +534,7 @@
                 desc: "The official high-performance portal for Mandsaur University's National Level Hackathon, built with Next.js to handle seamless registrations and event updates.",
                 img: "/assets/projects/codestorm.png",
                 github: "https://github.com/iamkavy47/mucodestorm", live: "https://mucodestorm.vercel.app/"
-            },
-            // "vertex": {
-            //     title: "Vertex Logic",
-            //     meta: "BACKEND / 2022",
-            //     desc: "Scalable cloud infrastructure solution. Automates server provisioning and load balancing using Python scripts and AWS Lambda functions.",
-            //     img: "https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=1000",
-            //     github: "#", live: "#"
-            // },
-            // "aether": {
-            //     title: "Aether Labs",
-            //     meta: "WEB3 / 2022",
-            //     desc: "Decentralized application (dApp) for trading unique digital assets. Smart contracts written in Solidity on the Ethereum blockchain.",
-            //     img: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=1000",
-            //     github: "#", live: "#"
-            // },
-            // "cipher": {
-            //     title: "Cipher Punk",
-            //     meta: "GENERATIVE ART / 2021",
-            //     desc: "Algorithmic art generator exploring chaos theory and fractal patterns. Users can mint their unique generations as NFTs.",
-            //     img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000",
-            //     github: "#", live: "#"
-            // },
-            // "glitch": {
-            //     title: "Glitch Mode",
-            //     meta: "EXPERIMENT / 2020",
-            //     desc: "Experimental portfolio site utilizing CSS mix-blend-modes and canvas manipulation to create a brutalist, glitch-art aesthetic.",
-            //     img: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1000",
-            //     github: "#", live: "#"
-            // }
+            }
         };
 
         // --- INIT ---
@@ -610,6 +598,14 @@
                 row.addEventListener('click', () => {
                     const id = row.getAttribute('data-id');
                     openModal(id);
+                });
+                // Accessibility: Trigger click on Enter key
+                row.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        const id = row.getAttribute('data-id');
+                        openModal(id);
+                    }
                 });
             });
 
